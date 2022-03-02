@@ -1,232 +1,275 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity, Dimensions } from 'react-native';
-import WorkoutTileLg from '../components/WorkoutTileLg.js';
-import LiveExerciseCard from '../components/LiveExerciseCard.js';
-import { useIsFocused } from "@react-navigation/native";
-import { completeSession, db, getPrevSession } from '../services/Database.js';
-import { ScrollView } from 'react-native-gesture-handler';
-import PrevSessionTile from '../components/PrevSessionTile';
-import { ExpandingDot } from 'react-native-animated-pagination-dots';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
+import WorkoutTileLg from "../components/WorkoutTileLg.js";
+import LiveExerciseCard from "../components/LiveExerciseCard.js";
+import { completeSession, db, getPrevSession } from "../services/Database.js";
+import { ScrollView } from "react-native-gesture-handler";
+import PrevSessionTile from "../components/PrevSessionTile";
+import { ExpandingDot } from "react-native-animated-pagination-dots";
+import moment from "moment";
 
 const LiveWorkoutScreen = ({ route, navigation }) => {
+  const { workoutId, workoutName, sessionId, tileColour, prevWorkoutSession } = route.params;
+  const [exercises, setExercises] = useState([]);
+  const [prevSession, setPrevSession] = useState(-1);
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
-    const { workoutId, workoutName, sessionId, tileColour } = route.params;
-    const [exercises, setExercises] = useState([]);
-    const [prevSession, setPrevSession] = useState(-1);
-    const scrollX = React.useRef(new Animated.Value(0)).current;
-
-
-    useEffect(() => {
-      db.transaction((tx) => tx.executeSql("SELECT * FROM Exercises WHERE workoutId = ?", [workoutId], (_, { rows: { _array } }) => setExercises(_array)));
-      async function func(){
-        let pSess = await getPrevSession(workoutId, false);
-        setPrevSession(pSess);
-      }  
-      func();
-    }, [])
-
-    const toExercise = (exerciseName, exerciseMuscle, exerciseId, workoutId) => {
-      navigation.navigate("ExerciseScreen", {exerciseName: exerciseName, exerciseMuscle: exerciseMuscle, exerciseId: exerciseId, workoutId: workoutId})
+  useEffect(() => {
+    db.transaction((tx) =>
+      tx.executeSql(
+        "SELECT * FROM Exercises WHERE workoutId = ?",
+        [workoutId],
+        (_, { rows: { _array } }) => setExercises(_array)
+      )
+    );
+    async function func() {
+      let pSess = await getPrevSession(workoutId, false);
+      setPrevSession(pSess);
     }
+    func();
+  }, []);
 
-    return (
-      <View style={styles.container}>
-        <ScrollView>
+  const toExercise = (exerciseName, exerciseMuscle, exerciseId, workoutId) => {
+    navigation.navigate("ExerciseScreen", {
+      exerciseName: exerciseName,
+      exerciseMuscle: exerciseMuscle,
+      exerciseId: exerciseId,
+      workoutId: workoutId,
+    });
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView>
         <View style={styles.tasksWrapper}>
-          <WorkoutTileLg workoutText={workoutName} tileColour={tileColour}/>  
+          <WorkoutTileLg workoutText={workoutName} tileColour={tileColour} />
         </View>
-        
+
         <View style={styles.exerciseWrapper}>
-        <ExpandingDot
-          data={exercises}
-          expandingDotWidth={30}
-          scrollX={scrollX}
-          inActiveDotOpacity={0.6}
-          dotStyle={{
+          <ExpandingDot
+            data={exercises}
+            expandingDotWidth={30}
+            scrollX={scrollX}
+            inActiveDotOpacity={0.6}
+            dotStyle={{
               width: 10,
               height: 10,
-              backgroundColor: '#fff',
+              backgroundColor: "#fff",
               borderRadius: 5,
               marginHorizontal: 5,
-          }}
-          activeDotColor='#fff'
-          inActiveDotColor='#6b6b6b'
-          containerStyle={{
-                top: 0,
-          }}
-          style={styles.dots}
-      />
-          <ScrollView 
-          horizontal 
-          pagingEnabled 
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            {
-              useNativeDriver: false,
-            }
-          )}
-          style={styles.scrollView}>
-            {
-                exercises.map(({exerciseId, exerciseName, exerciseMuscle, exerciseSets, exerciseReps}, index) => {
-                return <View key={index}>
-                  <LiveExerciseCard  exercise={exerciseName} muscle={exerciseMuscle} sets={exerciseSets} reps={exerciseReps} wid={workoutId} eid={exerciseId} sid={sessionId} toExercise={toExercise}/>
-                  <PrevSessionTile key={prevSession} pSession={prevSession} wid={workoutId} eid={exerciseId}/>
-                </View>
-                } 
-          )}
-        </ScrollView>
+            }}
+            activeDotColor="#fff"
+            inActiveDotColor="#6b6b6b"
+            containerStyle={{
+              top: 0,
+            }}
+            style={styles.dots}
+          />
+          <ScrollView
+            horizontal
+            pagingEnabled
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              {
+                useNativeDriver: false,
+              }
+            )}
+            style={styles.scrollView}
+          >
+            {exercises.map(
+              (
+                {
+                  exerciseId,
+                  exerciseName,
+                  exerciseMuscle,
+                  exerciseSets,
+                  exerciseReps,
+                },
+                index
+              ) => {
+                return (
+                  <View key={index}>
+                    <LiveExerciseCard
+                      exercise={exerciseName}
+                      muscle={exerciseMuscle}
+                      sets={exerciseSets}
+                      reps={exerciseReps}
+                      wid={workoutId}
+                      eid={exerciseId}
+                      sid={sessionId}
+                      prevWorkoutSession={prevWorkoutSession}
+                      toExercise={toExercise}
+                    />
+                    <PrevSessionTile
+                      key={prevSession}
+                      pSession={prevSession}
+                      title={moment(prevSession.date).format("MMMM Do YYYY")}
+                      wid={workoutId}
+                      eid={exerciseId}
+                    />
+                  </View>
+                );
+              }
+            )}
+          </ScrollView>
         </View>
         <TouchableOpacity
-            style={styles.start}
-            onPress={() => {
-              completeSession(sessionId);
-              navigation.goBack();
-            }}
+          style={styles.start}
+          onPress={() => {
+            completeSession(sessionId);
+            navigation.goBack();
+          }}
         >
-            <Text style={styles.startText}>Complete</Text>
+          <Text style={styles.startText}>Complete</Text>
         </TouchableOpacity>
-        </ScrollView>
-      </View>
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    scrollView: {
-      paddingTop: 15
-    },
-    imageBackground:{
-        flexDirection: 'column',
-        height: 150,
-        marginBottom: 20
-    },
-    imageText:{
-        fontWeight: 'bold',
-        color: '#fff',
-        fontSize: 24,
-        paddingTop: 10,
-        paddingLeft: 20
-    },
-    exerciseHeader:{
-        flexDirection: "row",
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-    },
-    exerciseWrapper:{
-        //paddingHorizontal:20
-    },
-    container: {
-      flex: 1,
-      backgroundColor: '#000',
-    },
-    tasksWrapper: {
-      paddingTop: 60,
-      paddingHorizontal: 20
-    },
-    sectionTitle: {
-      color: '#fff',
-      fontSize: 30,
-      fontWeight: 'bold',
-      marginTop: 20,
-      marginLeft: 25
-    },
-    items: {
-      marginTop: 30
-    },
-    items: {
-        marginTop: 30
-    },
-    writeTaskWrapper:{
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      paddingLeft: 20,
-      paddingRight: 20
-    },
-    input:{
-      paddingVertical: 15,
-      paddingHorizontal: 15,
-      backgroundColor: '#1B1B1B',
-      color: '#fff',
-      borderRadius: 15,
-      width: '100%',
-    },
-    workoutWrapper:{
-      flexDirection: "row",
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-    },
-    workoutTileWrapper:{
-      width: '47%',
-    },
-    newWorkoutTile:{
-        borderRadius: 20
-    },
-    add: {
-        color: '#fff',
-        padding: 50,
-        paddingVertical: 14,
-        backgroundColor: '#0cc98f',
-        alignItems: 'center',
-        borderRadius: 20,
-        elevation: 3,
-        margin: 20,
-    },
-    doneText: {
-        color: '#fff',
-        fontSize: 20
-    },
-    addExercise: {
-        backgroundColor: '#1B1B1B',
-        color: '#fff',
-        padding: 24,
-        paddingVertical: 14,
-        alignItems: 'center',
-        borderRadius: 50,
-        elevation: 3,
-        marginTop: 15,
-        marginRight: 20,
-        marginBottom: 0,
-    },
-    addExerciseText:{
-        color: '#fff',
-        fontSize: 18
-    },
-    addExercise: {
-        backgroundColor: '#1B1B1B',
-        color: '#fff',
-        padding: 24,
-        paddingVertical: 14,
-        alignItems: 'center',
-        borderRadius: 50,
-        elevation: 3,
-        marginTop: 15,
-        marginRight: 20,
-        marginBottom: 0,
-    },
-    add: {
-      color: '#fff',
-      padding: 50,
-      paddingVertical: 14,
-      backgroundColor: '#000',
-      alignItems: 'center',
-      borderRadius: 20,
-      elevation: 3,
-      margin: 20,
+      </ScrollView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollView: {
+    paddingTop: 15,
   },
-  start: {
-    color: '#fff',
+  imageBackground: {
+    flexDirection: "column",
+    height: 150,
+    marginBottom: 20,
+  },
+  imageText: {
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 24,
+    paddingTop: 10,
+    paddingLeft: 20,
+  },
+  exerciseHeader: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  exerciseWrapper: {
+    //paddingHorizontal:20
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#000",
+  },
+  tasksWrapper: {
+    paddingTop: 60,
+    paddingHorizontal: 20,
+  },
+  sectionTitle: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginLeft: 25,
+  },
+  items: {
+    marginTop: 30,
+  },
+  items: {
+    marginTop: 30,
+  },
+  writeTaskWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  input: {
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    backgroundColor: "#1B1B1B",
+    color: "#fff",
+    borderRadius: 15,
+    width: "100%",
+  },
+  workoutWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  workoutTileWrapper: {
+    width: "47%",
+  },
+  newWorkoutTile: {
+    borderRadius: 20,
+  },
+  add: {
+    color: "#fff",
     padding: 50,
     paddingVertical: 14,
-    backgroundColor: '#0cc98f',
+    backgroundColor: "#0cc98f",
+    alignItems: "center",
     borderRadius: 20,
     elevation: 3,
-    alignItems: 'center',
+    margin: 20,
+  },
+  doneText: {
+    color: "#fff",
+    fontSize: 20,
+  },
+  addExercise: {
+    backgroundColor: "#1B1B1B",
+    color: "#fff",
+    padding: 24,
+    paddingVertical: 14,
+    alignItems: "center",
+    borderRadius: 50,
+    elevation: 3,
+    marginTop: 15,
+    marginRight: 20,
+    marginBottom: 0,
+  },
+  addExerciseText: {
+    color: "#fff",
+    fontSize: 18,
+  },
+  addExercise: {
+    backgroundColor: "#1B1B1B",
+    color: "#fff",
+    padding: 24,
+    paddingVertical: 14,
+    alignItems: "center",
+    borderRadius: 50,
+    elevation: 3,
+    marginTop: 15,
+    marginRight: 20,
+    marginBottom: 0,
+  },
+  add: {
+    color: "#fff",
+    padding: 50,
+    paddingVertical: 14,
+    backgroundColor: "#000",
+    alignItems: "center",
+    borderRadius: 20,
+    elevation: 3,
+    margin: 20,
+  },
+  start: {
+    color: "#fff",
+    padding: 50,
+    paddingVertical: 14,
+    backgroundColor: "#0cc98f",
+    borderRadius: 20,
+    elevation: 3,
+    alignItems: "center",
     margin: 20,
   },
   startText: {
-      color: '#fff',
-      fontSize: 20
-  }
-  });
+    color: "#fff",
+    fontSize: 20,
+  },
+});
 
 export default LiveWorkoutScreen;

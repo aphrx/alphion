@@ -1,55 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { getPrevSession } from "../services/Database.js";
+import { getSessionSets } from "../services/Database.js";
 import PrevSessionTile from "../components/PrevSessionTile";
-import ExerciseGraph from "../components/ExerciseGraph.js";
 import moment from "moment";
 
-const ExerciseScreen = ({ route }) => {
-  const { exerciseName, exerciseMuscle, exerciseId, workoutId } = route.params;
-  const [prevSessions, setPrevSessions] = useState([]);
-  const [sessionsTenRM, setSessionsTenRM] = useState([0]);
+const SessionScreen = ({ route }) => {
+  const { workoutId, sessionId, date } = route.params;
+  const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
     async function func() {
-      let sid = await getPrevSession(workoutId, exerciseId, true);
-      setPrevSessions(sid);
+      let sid = await getSessionSets(sessionId);
+      setExercises(sid);
     }
     func();
   }, []);
-
-  const getSessionTenRM = async (index, tenrm) => {
-    if (tenrm != undefined && tenrm != -Infinity) {
-      let tr = sessionsTenRM.splice(index, 0, tenrm);
-
-      setSessionsTenRM([...sessionsTenRM, tr]);
-    }
-  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.tasksWrapper}>
           <View style={styles.newWorkoutTile}>
-            <Text style={styles.sectionTitle}>{exerciseName}</Text>
-            <Text style={styles.subTitle}>{exerciseMuscle}</Text>
+            <Text style={styles.sectionTitle}>{moment.utc(date).local().format("MMMM Do YYYY")}</Text>
+            <Text style={styles.subTitle}>{moment.utc(date).local() .format("h:mm a")}</Text>
           </View>
         </View>
-        <ExerciseGraph
-          prevSessions={prevSessions}
-          data={sessionsTenRM.reverse().slice(-9)}
-        />
-        {prevSessions.map((obj, index) => {
+        {exercises.map((obj, index) => {
           return (
             <PrevSessionTile
               key={index}
               index={index}
-              pSession={obj}
-              title={moment(obj.date).format("MMMM Do YYYY")}
+              pSession={{id:sessionId, date:date}}
               wid={workoutId}
-              eid={exerciseId}
-              getTenRM={getSessionTenRM}
+              eid={obj.exerciseId}
             />
           );
         })}
@@ -82,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "100",
     marginTop: 0,
     marginBottom: 10,
-    textTransform: "capitalize",
+    // textTransform: "capitalize",
     //marginLeft: 25
   },
   items: {
@@ -97,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExerciseScreen;
+export default SessionScreen;

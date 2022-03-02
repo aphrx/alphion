@@ -9,6 +9,8 @@ import ViewWorkoutScreen from './screens/ViewWorkoutScreen';
 import AddExerciseScreen from './screens/AddExerciseScreen';
 import LiveWorkoutScreen from './screens/LiveWorkoutScreen';
 import ExerciseScreen from './screens/ExerciseScreen';
+import SessionScreen from './screens/SessionScreen';
+import AllSessionScreen from './screens/AllSessionScreen';
 
 const Stack = createStackNavigator()
 
@@ -28,6 +30,8 @@ const App = () => {
         <Stack.Screen name="AddExerciseScreen" component={AddExerciseScreen} />
         <Stack.Screen name="LiveWorkoutScreen" component={LiveWorkoutScreen} />
         <Stack.Screen name="ExerciseScreen" component={ExerciseScreen} />
+        <Stack.Screen name="SessionScreen" component={SessionScreen} />
+        <Stack.Screen name="AllSessionScreen" component={AllSessionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </View>

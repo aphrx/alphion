@@ -1,23 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import moment from "moment";
 
-const ExerciseTile = (props) => {
+const SessionTile = (props) => {
   return (
-    <View style={props.isCustom ? styles.itemInverse : styles.item}>
-      {props.isCustom ? (
-        <Text style={styles.customText}>Add Custom Exercise</Text>
-      ) : (
-        <Text style={styles.exerciseText}>{props.exercise}</Text>
-      )}
+    <View style={styles.item}>
+      <Text style={styles.exerciseText}>{moment.utc(props.date).local().format("MMMM Do YYYY")}</Text>
       <View style={styles.subText}>
-        <Text style={styles.muscleText}>{props.muscle}</Text>
-        {props.sets ? (
-          <Text style={styles.repText}>
-            {props.reps} x {props.sets} sets
-          </Text>
-        ) : (
-          <></>
-        )}
+        <Text style={styles.text}>{props.workoutName}</Text>
+        <Text style={styles.text}>{moment.utc(props.date).local().format("h:mm a")}</Text>
       </View>
     </View>
   );
@@ -49,11 +40,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textTransform: "capitalize",
   },
-  muscleText: {
-    color: "#fff",
-    textTransform: "capitalize",
-  },
-  repText: {
+  text: {
     color: "#fff",
   },
   subText: {
@@ -63,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExerciseTile;
+export default SessionTile;
