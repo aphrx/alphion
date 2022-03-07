@@ -25,6 +25,10 @@ const AddWorkoutScreen = ({ navigation }) => {
   const backgrounds = [PinkImage, GreenImage, BlueImage, PurpleImage];
 
   const checkIfValid = () => {
+    if (exerciseList.length == 0) {
+      Toast.show("Workout does not have any exercises.");
+      return false;
+    }
     for (let i = 0; i < exerciseList.length; i++) {
       if (
         exerciseList[i].sets == null ||
@@ -125,26 +129,27 @@ const AddWorkoutScreen = ({ navigation }) => {
                   />
                 </View>
                 <View style={styles.imageOptions}>
+                  
                   <TileOptionButton
-                    key={selectedColor}
+                    key={selectedColor + 10}
                     opt={0}
                     selected={selectedColor}
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColor + 1}
+                    key={selectedColor + 40}
                     opt={1}
                     selected={selectedColor}
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColor + 2}
+                    key={selectedColor + 60}
                     opt={2}
                     selected={selectedColor}
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColor + 3}
+                    key={selectedColor + 80}
                     opt={3}
                     selected={selectedColor}
                     onPress={onSelectColor}
@@ -234,7 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   sectionTitle: {

@@ -9,24 +9,37 @@ import {
 import RepHeader from "./RepHeader";
 import RepTile from "./RepTile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { getSetsForExercise, insertSet } from "../services/Database";
+import {
+  getSetsForExercise,
+  getPrevSession,
+  insertSet,
+} from "../services/Database";
 import Toast from "react-native-simple-toast";
 
 const screenWidth = Dimensions.get("window").width;
-
 const LiveExerciseCard = (props) => {
   const [setsList, setSetsList] = useState([]);
   const [sets, setSets] = useState(props.sets);
 
   const loadPrevSetStates = async (temp) => {
     let sets = await getSetsForExercise(props.wid, props.sid, props.eid);
-    temp[0].lbs = 5
     for (let i = 0; i < sets.length; i++) {
       temp[i].lbs = sets[i].weight;
       temp[i].reps = sets[i].reps;
-      temp[i].isComplete = 1
+      temp[i].isComplete = 1;
     }
-    setSetsList(temp);
+    return temp
+  };
+
+  const loadHistorySets = async (temp) => {
+    let pSess = await getPrevSession(props.wid, false);
+    let sets = await getSetsForExercise(props.wid, pSess.id, props.eid);
+    for (let i = 0; i < sets.length; i++) {
+      temp[i].lbs = sets[i].weight;
+      temp[i].reps = sets[i].reps;
+      temp[i].isComplete = 0;
+    }
+    return temp
   };
 
   const assignSetList = async () => {
@@ -39,14 +52,12 @@ const LiveExerciseCard = (props) => {
         isComplete: 0,
       });
     }
-    if(props.prevWorkoutSession){
-      await loadPrevSetStates(temp);
+    temp = await loadHistorySets(temp);
+    console.log(temp)
+    if (props.prevWorkoutSession) {
+      temp = await loadPrevSetStates(temp);
     }
-    else{
-      setSetsList(temp);
-    }
-    
-    
+    setSetsList(temp);
   };
 
   useEffect(() => {
@@ -55,9 +66,6 @@ const LiveExerciseCard = (props) => {
     }
     func();
   }, []);
-
-
-  
 
   const onComplete = (i, l, r) => {
     let temp = setsList;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DarkTheme  } from '@react-navigation/native';
 import WorkoutScreen from './screens/WorkoutScreen';
@@ -17,7 +17,9 @@ const Stack = createStackNavigator()
 const App = () => {
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
-    <NavigationContainer theme={DarkTheme}>
+    <StatusBar backgroundColor='black' barStyle='light-content' />
+    <NavigationContainer theme={ DarkTheme }>
+    
       <Stack.Navigator
         screenOptions={{
           headerShown: false

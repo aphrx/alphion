@@ -27,17 +27,16 @@ const WorkoutTileLg = (props) => {
           <Text style={styles.workoutText}>{props.workoutText}</Text>
           <View style={styles.buttons}>
             {props.isEditable ? (
-              <TouchableOpacity style={styles.editButton}>
+              <TouchableOpacity onPress={() => props.onEdit()}>
                 <FontAwesome5
                   name={"pencil-alt"}
                   style={styles.editIcon}
-                  onPress={() => props.onEdit()}
                   solid
                 />
               </TouchableOpacity>
             ) : (
               <View />
-            )}
+            )} 
             {props.isDeletable ? (
               <TouchableOpacity onPress={() => props.onDelete(props.wid)}>
                 <FontAwesome5

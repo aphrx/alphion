@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   sectionTitle: {
@@ -100,42 +100,6 @@ const styles = StyleSheet.create({
   },
   items: {
     marginTop: 20,
-  },
-  writeTaskWrapper: {
-    position: "absolute",
-    bottom: 40,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    borderColor: "#c0c0c0",
-    borderWidth: 0.5,
-    width: 250,
-  },
-  addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: "#fff",
-    borderRadius: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "#c0c0c0",
-    borderWidth: 0.5,
-  },
-  calendarItems: {
-    paddingTop: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  recommendedTitle: {
-    color: "#4d4d4d",
-    marginBottom: 10,
   },
   workoutWrapper: {
     flexDirection: "row",

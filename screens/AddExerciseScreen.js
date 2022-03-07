@@ -161,12 +161,9 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#000",
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
     justifyContent: "center",
-  },
-  scrollView: {
-    // height: Dimensions.get("window").height
   },
   sectionTitle: {
     color: "#fff",
@@ -183,9 +180,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "100%",
     marginVertical: 10,
-  },
-  addExerciseButton: {
-    backgroundColor: "#fff",
   },
   add: {
     color: "#fff",
@@ -212,11 +206,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 10,
   },
-  modal: {
-    margin: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   modalContainer: {
     justifyContent: "center",
     elevation: 2,
@@ -225,8 +214,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
   },
-  centerContainer:{
-    alignItems: "center"
+  centerContainer: {
+    alignItems: "center",
   },
   modalHeader: {
     fontSize: 22,

@@ -137,72 +137,16 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingTop: 15,
   },
-  imageBackground: {
-    flexDirection: "column",
-    height: 150,
-    marginBottom: 20,
-  },
-  imageText: {
-    fontWeight: "bold",
-    color: "#fff",
-    fontSize: 24,
-    paddingTop: 10,
-    paddingLeft: 20,
-  },
-  exerciseHeader: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  exerciseWrapper: {
-    //paddingHorizontal:20
-  },
   container: {
     flex: 1,
     backgroundColor: "#000",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
-  sectionTitle: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginLeft: 25,
-  },
   items: {
     marginTop: 30,
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    backgroundColor: "#1B1B1B",
-    color: "#fff",
-    borderRadius: 15,
-    width: "100%",
-  },
-  workoutWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  workoutTileWrapper: {
-    width: "47%",
-  },
-  newWorkoutTile: {
-    borderRadius: 20,
   },
   add: {
     color: "#fff",
@@ -245,16 +189,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginRight: 20,
     marginBottom: 0,
-  },
-  add: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#000",
-    alignItems: "center",
-    borderRadius: 20,
-    elevation: 3,
-    margin: 20,
   },
   start: {
     color: "#fff",

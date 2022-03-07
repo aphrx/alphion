@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -23,6 +23,7 @@ import PurpleImage from "../assets/purple.png";
 import TileOptionButton from "../components/TileOptionButton.js";
 import Toast from "react-native-simple-toast";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import BottomSheet from "reanimated-bottom-sheet";
 
 const EditWorkoutScreen = ({ route, navigation }) => {
   const { workoutName, workoutExercises, workoutId, tileColour } = route.params;
@@ -30,8 +31,13 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   const [exerciseList, setExerciseList] = useState(workoutExercises);
   const [selectedColour, setSelectedColour] = useState(tileColour);
   const backgrounds = [PinkImage, GreenImage, BlueImage, PurpleImage];
+  const sheetRef = useRef(null);
 
   const checkIfValid = () => {
+    if (exerciseList.length == 0) {
+      Toast.show("Workout does not have any exercises.");
+      return false;
+    }
     for (let i = 0; i < exerciseList.length; i++) {
       if (
         exerciseList[i].exerciseSets == null ||
@@ -40,7 +46,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
         exerciseList[i].exerciseReps == null
       ) {
         Toast.show("Some exercises do not have sets and/or reps.");
-        return false;
+        return false; 
       }
     }
     if (name.trim() == "") {
@@ -110,6 +116,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   };
 
   const onDelete = (i) => {
+    
     let temp = exerciseList;
     temp.splice(i, 1);
     setExerciseList([...temp]);
@@ -125,9 +132,35 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   };
 
   const handleDeleteWorkout = (workoutId) => {
+    
     deleteTask(workoutId);
     navigation.pop(2);
   };
+
+  renderInner = () => (
+    <View style={styles.modalContainer}>
+      <View style={styles.centerContainer}>
+        <Text style={styles.modalHeader}>Delete Workout</Text>
+        <Text style={styles.modalText}>Do you confirm that you want to delete the workout?</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.add}
+        onPress={() =>
+          handleDeleteWorkout(workoutId)
+        }
+      >
+        <Text style={styles.doneText}>Delete</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.defaultButton}
+        onPress={() => sheetRef.current.snapTo(1)
+        }
+      >
+        <Text style={styles.doneText}>Cancel</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
 
   return (
     <View style={styles.container}>
@@ -150,7 +183,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
                   />
                   <View style={styles.buttons}>
                     <TouchableOpacity
-                      onPress={() => handleDeleteWorkout(workoutId)}
+                      onPress={() => sheetRef.current.snapTo(0)}
                     >
                       <FontAwesome5
                         name={"trash-alt"}
@@ -162,25 +195,25 @@ const EditWorkoutScreen = ({ route, navigation }) => {
                 </View>
                 <View style={styles.imageOptions}>
                   <TileOptionButton
-                    key={selectedColour}
+                    key={selectedColour + 10}
                     opt={0}
                     selected={selectedColour}
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColour + 1}
+                    key={selectedColour + 40}
                     opt={1}
                     selected={selectedColour}
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColour + 2}
+                    key={selectedColour + 60}
                     opt={2}
                     selected={selectedColour}
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColour + 3}
+                    key={selectedColour + 80} 
                     opt={3}
                     selected={selectedColour}
                     onPress={onSelectColor}
@@ -238,11 +271,20 @@ const EditWorkoutScreen = ({ route, navigation }) => {
         </View>
       </ScrollView>
       <TouchableOpacity
-        style={styles.add}
+        style={styles.defaultButton}
         onPress={() => handleUpdateWorkout()}
       >
         <Text style={styles.doneText}>Update</Text>
       </TouchableOpacity>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[300, 0]}
+        borderRadius={20}
+        renderContent={this.renderInner}
+        initialSnap={1}
+        enabledInnerScrolling={false}
+        // onCloseEnd={() => setIsOpen(0)}
+      />
     </View>
   );
 };
@@ -284,7 +326,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   sectionTitle: {
@@ -326,19 +368,27 @@ const styles = StyleSheet.create({
   newWorkoutTile: {
     borderRadius: 20,
   },
+  
   add: {
     color: "#fff",
     padding: 50,
     paddingVertical: 14,
-    backgroundColor: "#007AFF",
+    backgroundColor: "#ff6961",
     alignItems: "center",
     borderRadius: 20,
     elevation: 3,
     margin: 20,
+    marginBottom: 0
   },
-  doneText: {
+  defaultButton: {
     color: "#fff",
-    fontSize: 20,
+    padding: 50,
+    paddingVertical: 14,
+    alignItems: "center",
+    borderRadius: 20,
+    elevation: 3,
+    margin: 20,
+    backgroundColor: "#007AFF"
   },
   addExercise: {
     backgroundColor: "#1B1B1B",
@@ -393,6 +443,41 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "row",
     margin: 10,
+  },
+  doneText: {
+    color: "#fff",
+    fontSize: 20,
+  },
+  modalTextInput: {
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    backgroundColor: "#1b1b1b",
+    color: "#fff",
+    borderRadius: 20,
+    width: "90%",
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  modalContainer: {
+    justifyContent: "center",
+    elevation: 5,
+    backgroundColor: "#0F0F0f",
+    paddingVertical: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  centerContainer: {
+    alignItems: "center",
+  },
+  modalHeader: {
+    fontSize: 22,
+    color: "#fff",
+    paddingVertical: 20,
+  },
+  modalText: {
+    fontSize: 14,
+    color: "#fff",
+    paddingVertical: 5,
   },
 });
 

@@ -23,32 +23,39 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   const sheetRef = useRef(null);
 
   useEffect(() => {
-    db.transaction((tx) =>
-      tx.executeSql(
-        "SELECT * FROM Exercises WHERE workoutId = ?",
-        [workoutId],
-        (_, { rows: { _array } }) => setExercises(_array)
-      )
-    );
-    db.transaction((tx) =>
-      tx.executeSql(
-        "SELECT * FROM Sessions WHERE workoutId = ? AND isComplete = 1 order by id desc",
-        [workoutId],
-        (_, { rows: { _array } }) => setSessions(_array)
-      )
-    );
-    db.transaction((tx) =>
-      tx.executeSql(
-        "SELECT * FROM Workouts WHERE id = ?",
-        [workoutId],
-        (_, { rows: { _array } }) => {
-          if (_array.length != 0) {
-            setWorkoutName(_array[0].task);
-            setTileColour(_array[0].colourOption);
+    let unmounted = false;
+    if (!unmounted) {
+      db.transaction((tx) =>
+        tx.executeSql(
+          "SELECT * FROM Exercises WHERE workoutId = ?",
+          [workoutId],
+          (_, { rows: { _array } }) => setExercises(_array)
+        )
+      );
+      db.transaction((tx) =>
+        tx.executeSql(
+          "SELECT * FROM Sessions WHERE workoutId = ? AND isComplete = 1 order by id desc",
+          [workoutId],
+          (_, { rows: { _array } }) => setSessions(_array)
+        )
+      );
+      db.transaction((tx) =>
+        tx.executeSql(
+          "SELECT * FROM Workouts WHERE id = ?",
+          [workoutId],
+          (_, { rows: { _array } }) => {
+            if (_array.length != 0) {
+              setWorkoutName(_array[0].task);
+              setTileColour(_array[0].colourOption);
+            }
           }
-        }
-      )
-    );
+        )
+      );
+    }
+
+    return () => {
+      unmounted = true;
+    };
   }, [isFocused]);
 
   const handleStartWorkout = async () => {
@@ -60,12 +67,12 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
     } else {
       sheetRef.current.snapTo(0);
       setPrevSessionId(lastSess[0].id);
-      // return startWorkout()
     }
   };
 
   const startWorkout = async () => {
     let sid = await insertSession(workoutId);
+
     navigation.navigate("LiveWorkoutScreen", {
       workoutId: workoutId,
       workoutName: workoutName,
@@ -73,6 +80,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
       tileColour: tileColour,
       prevWorkoutSession: false,
     });
+    sheetRef.current.snapTo(1);
   };
 
   const continueWorkout = async () => {
@@ -83,6 +91,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
       tileColour: tileColour,
       prevWorkoutSession: true,
     });
+    sheetRef.current.snapTo(1);
   };
 
   const toExercise = (exerciseName, exerciseMuscle, exerciseId, workoutId) => {
@@ -98,7 +107,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
     navigation.navigate("SessionScreen", {
       workoutId: workoutId,
       sessionId: sessionId,
-      date: date
+      date: date,
     });
   };
 
@@ -150,7 +159,6 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
                     },
                     index
                   ) => {
-                    // return <ExerciseTileWithSets key={index} exercise={exerciseName} muscle={exerciseMuscle} sets={exerciseSets} reps={exerciseReps} toExercise={toExercise} eid={exerciseId} enabled={false} wid={workoutId} onDelete={handleDeleteWorkout}/>
                     return (
                       <TouchableOpacity
                         key={index}
@@ -180,34 +188,16 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
             <View style={styles.exerciseSection}>
               <Text style={styles.sectionTitle}>Sessions</Text>
               {sessions.length != 0 ? (
-                sessions.map(
-                  (
-                    { id,
-                      date
-                    },
-                    index
-                  ) => {
-                    // return <ExerciseTileWithSets key={index} exercise={exerciseName} muscle={exerciseMuscle} sets={exerciseSets} reps={exerciseReps} toExercise={toExercise} eid={exerciseId} enabled={false} wid={workoutId} onDelete={handleDeleteWorkout}/>
-                    
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() =>
-                          toSession(
-                            workoutId,
-                            id, 
-                            date
-                          )
-                        }
-                      >
-                        <SessionTile
-                          date={date}
-                          workoutName={workoutName}
-                        />
-                      </TouchableOpacity>
-                    );
-                  }
-                )
+                sessions.map(({ id, date }, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => toSession(workoutId, id, date)}
+                    >
+                      <SessionTile date={date} workoutName={workoutName} />
+                    </TouchableOpacity>
+                  );
+                })
               ) : (
                 <Text style={styles.noExercises}>No Sessions</Text>
               )}
@@ -215,12 +205,6 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
           </View>
         </View>
       </ScrollView>
-      {/* <TouchableOpacity
-            style={styles.delete}
-            onPress={() => handleDeleteWorkout(workoutId)}
-        >
-            <Text style={styles.doneText}>Delete Workout</Text>
-        </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.start}
         onPress={async () => handleStartWorkout()}
@@ -251,7 +235,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   sectionTitle: {
@@ -260,7 +244,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 0,
     marginBottom: 10,
-    //marginLeft: 25
   },
   items: {
     marginTop: 30,
@@ -294,12 +277,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
   },
-  doneText: {
-    color: "#ff6666",
-    fontSize: 20,
-  },
-  exerciseSection:{
-    marginBottom:10
+  exerciseSection: {
+    marginBottom: 10,
   },
   start: {
     color: "#fff",
@@ -334,16 +313,11 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     justifyContent: "center",
-    backgroundColor: "#353535",
+    backgroundColor: "#0F0F0F",
     paddingTop: 30,
     paddingBottom: 50,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-  },
-  modalHeader: {
-    fontSize: 22,
-    color: "#fff",
-    paddingVertical: 20,
   },
 });
 

@@ -2,13 +2,13 @@
   "expo": {
     "name": "Alphion",
     "slug": "alphion",
-    "version": "0.1.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,9 +22,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#000"
       },
-      "package": "com.aphrx.alphion"
+      "permissions": [],
+      "package": "com.aphrx.alphion",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

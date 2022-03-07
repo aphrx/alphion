@@ -12,11 +12,15 @@ const ExerciseScreen = ({ route }) => {
   const [sessionsTenRM, setSessionsTenRM] = useState([0]);
 
   useEffect(() => {
+    let unmounted = false;
     async function func() {
       let sid = await getPrevSession(workoutId, exerciseId, true);
       setPrevSessions(sid);
     }
-    func();
+    if(!unmounted){
+      func();
+    }
+    return () => {unmounted = true}
   }, []);
 
   const getSessionTenRM = async (index, tenrm) => {
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   sectionTitle: {
@@ -72,9 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     marginTop: 0,
-
     textTransform: "capitalize",
-    //marginLeft: 25
   },
   subTitle: {
     color: "#fff",
@@ -84,17 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textTransform: "capitalize",
     //marginLeft: 25
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
+  }
 });
 
 export default ExerciseScreen;

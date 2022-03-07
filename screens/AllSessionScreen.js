@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   sectionTitle: {

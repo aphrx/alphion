@@ -3,15 +3,12 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import PrevRepHeader from "./PrevRepHeader";
 import PrevRepTile from "./PrevRepTile";
 import { getExerciseName, getSetsForExercise } from "../services/Database";
-import moment from "moment";
 
 const screenWidth = Dimensions.get("window").width;
 
 const PrevSessionTile = (props) => {
   const [setsList, setSetsList] = useState([]);
-  const timestamp = moment(props.pSession.date);
-  const [highestTenRM, setHighestTenRM] = useState(0);
-  const [exerciseName, setExerciseName] = useState(null)
+  const [exerciseName, setExerciseName] = useState(null);
 
   useEffect(() => {
     if (props.pSession.id != -1 && props.pSession.id != undefined) {
@@ -21,11 +18,11 @@ const PrevSessionTile = (props) => {
           props.pSession.id,
           props.eid
         );
-        
-        if (!props.title){
+
+        if (!props.title) {
           setExerciseName(await getExerciseName(props.eid));
-        } 
-        
+        }
+
         setSetsList(s);
         if (props.getTenRM) {
           findHighestTenRM(s);
@@ -40,7 +37,6 @@ const PrevSessionTile = (props) => {
     for (let i = 0; i < s.length; i++) {
       temp.push((s[i].weight * s[i].reps) / 10);
     }
-    setHighestTenRM(Math.max(...temp));
     props.getTenRM(props.index, Math.max(...temp));
   };
 
@@ -51,14 +47,14 @@ const PrevSessionTile = (props) => {
   return (
     <View style={styles.item}>
       <Text style={styles.exerciseText}>
-        {props.title?props.title:exerciseName}
+        {props.title ? props.title : exerciseName}
       </Text>
       <View style={styles.repView}>
         <PrevRepHeader />
-        {setsList.map(({ setIndex, weight, reps }) => {
+        {setsList.map(({ setIndex, weight, reps }, index) => {
           return (
             <PrevRepTile
-              key={setIndex}
+              key={index}
               index={setIndex}
               lbs={weight}
               reps={reps}
