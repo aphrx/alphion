@@ -26,7 +26,7 @@
       },
       "permissions": [],
       "package": "com.aphrx.alphion",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

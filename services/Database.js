@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { Exercises } from "../data/Exercises.js";
 
-export const db = SQLite.openDatabase("data.db");
+export const db = SQLite.openDatabase("data-104a.db");
 
 export const deleteTask = (id) => {
   db.transaction((tx) => {

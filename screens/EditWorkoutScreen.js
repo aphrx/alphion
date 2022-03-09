@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     justifyContent: "center",
     elevation: 5,
-    backgroundColor: "#0F0F0f",
+    backgroundColor: "#0F0F0F",
     paddingVertical: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
