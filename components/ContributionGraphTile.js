@@ -18,7 +18,6 @@ const ContributionGraphTile = (props) => {
     <View style={styles.item}>
       <ContributionGraph
         style={styles.graphStyle}
-        //values={props.sessions}
         values={[{ date: "2022-01-01", count: 0 }].concat(props.sessions)}
         endDate={props.endDate}
         numDays={105}

@@ -40,11 +40,13 @@ const WorkoutScreen = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         <View style={styles.tasksWrapper}>
           <Text style={styles.sectionTitle}>Workouts</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate("AllSessionScreen")}>
-          <ContributionGraphTile
-            sessions={contributionSessions}
-            endDate={endDate}
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("AllSessionScreen")}
+          >
+            <ContributionGraphTile
+              sessions={contributionSessions}
+              endDate={endDate}
+            />
           </TouchableOpacity>
           <View style={styles.items}></View>
           <View>

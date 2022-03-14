@@ -102,10 +102,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     textTransform: "capitalize",
   },
-  setAdjustmentText: {
-    marginTop: 0,
-    color: "#fff",
-  },
   editableSetAdjustmentText: {
     color: "#fff",
     textTransform: "capitalize",
@@ -121,7 +117,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 50,
     elevation: 3,
-
     marginRight: 0,
     marginBottom: 0,
     flexDirection: "row",

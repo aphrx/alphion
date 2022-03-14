@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { getPrevSession } from "../services/Database.js";
+import { getPrevSession, getPrevSessionSets } from "../services/Database.js";
 import PrevSessionTile from "../components/PrevSessionTile";
 import ExerciseGraph from "../components/ExerciseGraph.js";
 import moment from "moment";
 
 const ExerciseScreen = ({ route }) => {
   const { exerciseName, exerciseMuscle, exerciseId, workoutId } = route.params;
+  const [prevSessionSets, setPrevSessionSets] = useState([]);
   const [prevSessions, setPrevSessions] = useState([]);
   const [sessionsTenRM, setSessionsTenRM] = useState([0]);
 
   useEffect(() => {
     let unmounted = false;
     async function func() {
-      let sid = await getPrevSession(workoutId, exerciseId, true);
-      setPrevSessions(sid);
+      let sid = await getPrevSessionSets(workoutId, exerciseId, true);
+      let sessions = await getPrevSession(workoutId, exerciseId);
+      setPrevSessions(sessions);
+      setPrevSessionSets(sid);
     }
-    if(!unmounted){
+    if (!unmounted) {
       func();
     }
-    return () => {unmounted = true}
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const getSessionTenRM = async (index, tenrm) => {
@@ -41,7 +46,7 @@ const ExerciseScreen = ({ route }) => {
           </View>
         </View>
         <ExerciseGraph
-          prevSessions={prevSessions}
+          prevSessions={prevSessionSets}
           data={sessionsTenRM.reverse().slice(-9)}
         />
         {prevSessions.map((obj, index) => {
@@ -85,8 +90,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 10,
     textTransform: "capitalize",
-    //marginLeft: 25
-  }
+  },
 });
 
 export default ExerciseScreen;

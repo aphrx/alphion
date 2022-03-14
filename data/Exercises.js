@@ -290,11 +290,6 @@ export const Exercises = [
     id: 58,
   },
   {
-    exercise: "Jogging",
-    muscle: "Legs",
-    id: 59,
-  },
-  {
     exercise: "Jumping Jacks",
     muscle: "Legs",
     id: 60,

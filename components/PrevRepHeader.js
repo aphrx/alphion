@@ -28,14 +28,6 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "33%",
   },
-  editableCheck: {
-    color: "#fff",
-    fontSize: 14,
-    textAlign: "center",
-    alignItems: "center",
-    padding: 15,
-    width: "18%",
-  },
   setsView: {
     flexDirection: "row",
     justifyContent: "space-between",

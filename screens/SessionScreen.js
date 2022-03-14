@@ -22,8 +22,12 @@ const SessionScreen = ({ route }) => {
       <ScrollView>
         <View style={styles.tasksWrapper}>
           <View style={styles.newWorkoutTile}>
-            <Text style={styles.sectionTitle}>{moment.utc(date).local().format("MMMM Do YYYY")}</Text>
-            <Text style={styles.subTitle}>{moment.utc(date).local() .format("h:mm a")}</Text>
+            <Text style={styles.sectionTitle}>
+              {moment.utc(date).local().format("MMMM Do YYYY")}
+            </Text>
+            <Text style={styles.subTitle}>
+              {moment.utc(date).local().format("h:mm a")}
+            </Text>
           </View>
         </View>
         {exercises.map((obj, index) => {
@@ -31,7 +35,7 @@ const SessionScreen = ({ route }) => {
             <PrevSessionTile
               key={index}
               index={index}
-              pSession={{id:sessionId, date:date}}
+              pSession={{ id: sessionId, date: date }}
               wid={workoutId}
               eid={obj.exerciseId}
             />
@@ -56,9 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     marginTop: 0,
-
     textTransform: "capitalize",
-    //marginLeft: 25
   },
   subTitle: {
     color: "#fff",
@@ -66,18 +68,6 @@ const styles = StyleSheet.create({
     fontWeight: "100",
     marginTop: 0,
     marginBottom: 10,
-    // textTransform: "capitalize",
-    //marginLeft: 25
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
   },
 });
 

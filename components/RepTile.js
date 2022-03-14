@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,12 @@ const RepTile = (props) => {
   const [lbsValue, setLbsValue] = useState(props.lbs);
   const [repsValue, setRepsValue] = useState(props.reps);
 
+  const updateValues = (lbs, reps) => {
+    if (props.isComplete) {
+      props.onUpdate(props.index, lbs, reps, props.isComplete);
+    }
+  };
+
   return (
     <View style={styles.item}>
       <View style={styles.setsView}>
@@ -23,7 +29,10 @@ const RepTile = (props) => {
             style={styles.editableSetAdjustmentText}
             placeholder="-"
             placeholderTextColor={"#fff"}
-            onChangeText={(text) => setLbsValue(text)}
+            onChangeText={(text) => {
+              setLbsValue(text);
+              updateValues(text, repsValue);
+            }}
           >
             {lbsValue}
           </TextInput>
@@ -36,14 +45,21 @@ const RepTile = (props) => {
             style={styles.editableSetAdjustmentText}
             placeholder="-"
             placeholderTextColor={"#fff"}
-            onChangeText={(text) => setRepsValue(text)}
+            onChangeText={(text) => {
+              setRepsValue(text);
+              updateValues(lbsValue, text);
+            }}
           >
             {repsValue}
           </TextInput>
         </View>
         <TouchableOpacity
           style={props.isComplete ? styles.checkButton : styles.checkButtonNC}
-          onPress={() => props.onComplete(props.index, lbsValue, repsValue)}
+          onPress={() => {
+            props.isComplete
+              ? props.onUncomplete(props.index)
+              : props.onComplete(props.index, lbsValue, repsValue);
+          }}
         >
           <Text style={styles.editableSetAdjustmentText}>
             <FontAwesome5 name={"check"} solid />
@@ -55,15 +71,11 @@ const RepTile = (props) => {
 };
 const styles = StyleSheet.create({
   item: {
-    // backgroundColor: '#fff',
     borderRadius: 10,
     flexDirection: "column",
     justifyContent: "space-between",
     marginVertical: 5,
     width: "100%",
-  },
-  setAdjustmentText: {
-    color: "#fff",
   },
   editableSetAdjustmentText: {
     color: "#fff",

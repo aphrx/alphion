@@ -40,7 +40,7 @@ const PrevSessionTile = (props) => {
     props.getTenRM(props.index, Math.max(...temp));
   };
 
-  if (props.pSession.date == -1) {
+  if (props.pSession.date == -1 || setsList.length == 0) {
     return <View></View>;
   }
 
@@ -87,50 +87,6 @@ const styles = StyleSheet.create({
   repView: {
     marginTop: 10,
     width: "100%",
-  },
-  setWrapper: {
-    backgroundColor: "#000",
-    width: "100%",
-    padding: 15,
-    borderRadius: 15,
-    marginBottom: 20,
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    textAlign: "center",
-  },
-  setNumber: {
-    color: "#fff",
-    fontSize: 30,
-  },
-  setButton: {
-    color: "#fff",
-    fontSize: 30,
-  },
-  setButtonText: {
-    color: "#fff",
-    fontSize: 25,
-  },
-  setHeader: {
-    color: "#fff",
-    fontSize: 14,
-    textAlign: "center",
-    alignItems: "center",
-  },
-  doneButton: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#0cc98f",
-    borderRadius: 20,
-    elevation: 3,
-    alignItems: "center",
-    margin: 20,
-  },
-  doneText: {
-    color: "#fff",
-    fontSize: 20,
   },
 });
 

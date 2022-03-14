@@ -4,16 +4,14 @@ import { View, Text, StyleSheet } from "react-native";
 const ExerciseTile = (props) => {
   return (
     <View style={props.isCustom ? styles.itemInverse : styles.item}>
-      {props.isCustom ? (
-        <Text style={styles.customText}>Add Custom Exercise</Text>
-      ) : (
-        <Text style={styles.exerciseText}>{props.exercise}</Text>
-      )}
+      <Text style={styles.customText}>
+        {props.isCustom ? "Add Custom Exercise" : props.exercise}
+      </Text>
       <View style={styles.subText}>
         <Text style={styles.muscleText}>{props.muscle}</Text>
         {props.sets ? (
           <Text style={styles.repText}>
-            {props.reps} x {props.sets} sets
+            {props.sets} x {props.reps} reps
           </Text>
         ) : (
           <></>
@@ -39,11 +37,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#353535",
     marginVertical: 10,
   },
-  exerciseText: {
-    fontWeight: "bold",
-    color: "#fff",
-    textTransform: "capitalize",
-  },
   customText: {
     fontWeight: "bold",
     color: "#fff",
@@ -60,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-  },
+  }
 });
 
 export default ExerciseTile;

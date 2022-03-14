@@ -22,7 +22,6 @@ const ExerciseGraph = (props) => {
                 props.data.length - 1 ? 2 : 0,
                 props.data.length
               ),
-              // data: [5, 1,2 4]
             },
           ],
         }}
@@ -30,7 +29,6 @@ const ExerciseGraph = (props) => {
         height={400}
         yAxisInterval={1} // optional, defaults to 1
         chartConfig={{
-          // backgroundColor: "#e26a00",
           backgroundGradientFromOpacity: 0,
           backgroundGradientToOpacity: 0,
           paddingTop: 20,
@@ -43,7 +41,6 @@ const ExerciseGraph = (props) => {
           propsForDots: {
             r: "6",
             strokeWidth: "2",
-            // stroke: "#ffa726"
           },
         }}
         bezier
@@ -57,8 +54,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "baseline",
     backgroundColor: "#000",
-    // marginVertical: 10,
-    // marginHorizontal: 20,
     paddingTop: 20,
     borderRadius: 10,
   },

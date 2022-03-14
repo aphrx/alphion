@@ -129,7 +129,6 @@ const AddWorkoutScreen = ({ navigation }) => {
                   />
                 </View>
                 <View style={styles.imageOptions}>
-                  
                   <TileOptionButton
                     key={selectedColor + 10}
                     opt={0}
@@ -249,19 +248,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 25,
   },
-  items: {
-    marginTop: 30,
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
@@ -274,9 +260,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-  },
-  workoutTileWrapper: {
-    width: "47%",
   },
   newWorkoutTile: {
     borderRadius: 20,
@@ -316,29 +299,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
-  editButton: {
-    margin: 10,
-  },
-  editIcon: {
-    color: "#fff",
-    fontSize: 20,
-    marginTop: 10,
-    marginRight: 10,
-  },
   imageOptions: {
-    //backgroundColor: '#fff',
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-end",
     height: 50,
     paddingRight: 15,
-  },
-  colorOptions: {
-    padding: 20,
-    //backgroundColor: '#000',
-    width: 20,
-    borderRadius: 20,
-    margin: 5,
   },
 });
 

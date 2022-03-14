@@ -8,14 +8,20 @@ import {
 } from "react-native";
 import WorkoutTileLg from "../components/WorkoutTileLg.js";
 import LiveExerciseCard from "../components/LiveExerciseCard.js";
-import { completeSession, db, getPrevSession } from "../services/Database.js";
+import {
+  completeSession,
+  db,
+  getPrevSession,
+  getPrevSessionSets,
+} from "../services/Database.js";
 import { ScrollView } from "react-native-gesture-handler";
 import PrevSessionTile from "../components/PrevSessionTile";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import moment from "moment";
 
 const LiveWorkoutScreen = ({ route, navigation }) => {
-  const { workoutId, workoutName, sessionId, tileColour, prevWorkoutSession } = route.params;
+  const { workoutId, workoutName, sessionId, tileColour, prevWorkoutSession } =
+    route.params;
   const [exercises, setExercises] = useState([]);
   const [prevSession, setPrevSession] = useState(-1);
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -29,7 +35,7 @@ const LiveWorkoutScreen = ({ route, navigation }) => {
       )
     );
     async function func() {
-      let pSess = await getPrevSession(workoutId, false);
+      let pSess = await getPrevSessionSets(workoutId, false);
       setPrevSession(pSess);
     }
     func();
@@ -144,51 +150,6 @@ const styles = StyleSheet.create({
   tasksWrapper: {
     paddingTop: 20,
     paddingHorizontal: 20,
-  },
-  items: {
-    marginTop: 30,
-  },
-  add: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#0cc98f",
-    alignItems: "center",
-    borderRadius: 20,
-    elevation: 3,
-    margin: 20,
-  },
-  doneText: {
-    color: "#fff",
-    fontSize: 20,
-  },
-  addExercise: {
-    backgroundColor: "#1B1B1B",
-    color: "#fff",
-    padding: 24,
-    paddingVertical: 14,
-    alignItems: "center",
-    borderRadius: 50,
-    elevation: 3,
-    marginTop: 15,
-    marginRight: 20,
-    marginBottom: 0,
-  },
-  addExerciseText: {
-    color: "#fff",
-    fontSize: 18,
-  },
-  addExercise: {
-    backgroundColor: "#1B1B1B",
-    color: "#fff",
-    padding: 24,
-    paddingVertical: 14,
-    alignItems: "center",
-    borderRadius: 50,
-    elevation: 3,
-    marginTop: 15,
-    marginRight: 20,
-    marginBottom: 0,
   },
   start: {
     color: "#fff",

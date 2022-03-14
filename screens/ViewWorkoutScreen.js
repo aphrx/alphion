@@ -245,37 +245,8 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 10,
   },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  workoutWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  workoutTileWrapper: {
-    width: "47%",
-  },
   newWorkoutTile: {
     borderRadius: 20,
-  },
-  delete: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#000",
-    borderRadius: 20,
-    elevation: 3,
-    alignItems: "center",
-    marginHorizontal: 20,
-    marginTop: 20,
   },
   exerciseSection: {
     marginBottom: 10,
@@ -305,11 +276,6 @@ const styles = StyleSheet.create({
   startText: {
     color: "#fff",
     fontSize: 20,
-  },
-  modal: {
-    margin: 0,
-    alignItems: "center",
-    justifyContent: "center",
   },
   modalContainer: {
     justifyContent: "center",

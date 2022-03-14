@@ -5,10 +5,14 @@ import moment from "moment";
 const SessionTile = (props) => {
   return (
     <View style={styles.item}>
-      <Text style={styles.exerciseText}>{moment.utc(props.date).local().format("MMMM Do YYYY")}</Text>
+      <Text style={styles.exerciseText}>
+        {moment.utc(props.date).local().format("MMMM Do YYYY")}
+      </Text>
       <View style={styles.subText}>
         <Text style={styles.text}>{props.workoutName}</Text>
-        <Text style={styles.text}>{moment.utc(props.date).local().format("h:mm a")}</Text>
+        <Text style={styles.text}>
+          {moment.utc(props.date).local().format("h:mm a")}
+        </Text>
       </View>
     </View>
   );
@@ -22,20 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B1B1B",
     marginVertical: 10,
   },
-  itemInverse: {
-    padding: 15,
-    borderRadius: 10,
-    flexDirection: "column",
-    alignItems: "baseline",
-    backgroundColor: "#353535",
-    marginVertical: 10,
-  },
   exerciseText: {
-    fontWeight: "bold",
-    color: "#fff",
-    textTransform: "capitalize",
-  },
-  customText: {
     fontWeight: "bold",
     color: "#fff",
     textTransform: "capitalize",

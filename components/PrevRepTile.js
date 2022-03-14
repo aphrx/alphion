@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     width: "100%",
   },
-  setAdjustmentText: {
-    color: "#fff",
-  },
   editableSetAdjustmentText: {
     color: "#fff",
     textTransform: "capitalize",

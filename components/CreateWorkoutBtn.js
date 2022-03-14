@@ -24,9 +24,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 50,
   },
-  dateText: {
-    color: "#fff",
-  },
 });
 
 export default CreateWorkoutBtn;

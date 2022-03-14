@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-const RepHeader = (props) => {
+const RepHeader = () => {
   return (
     <View style={styles.item}>
       <View style={styles.setsView}>
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-
   editableSetAdjustmentText: {
     color: "#fff",
     fontSize: 14,

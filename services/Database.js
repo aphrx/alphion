@@ -58,6 +58,22 @@ export const insertSet = (wid, eid, sid, si, weight, reps) => {
   });
 };
 
+export const updateSet = (wid, eid, sid, si, weight, reps) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "UPDATE Sets SET weight = ?, reps = ? WHERE workoutId = ? AND exerciseId = ? AND sessionId = ? AND setIndex = ?", [weight, reps, wid, eid, sid, si]
+    );
+  });
+};
+
+export const deleteSet = (wid, eid, sid, si) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "DELETE FROM Sets WHERE workoutId = ? AND exerciseId = ? AND sessionId = ? AND setIndex = ?", [wid, eid, sid, si]
+    );
+  });
+};
+
 export const insertSession = (wid) =>
   new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -74,7 +90,7 @@ export const insertSession = (wid) =>
     });
   });
 
-export const getPrevSession = (wid, eid, isAll) =>
+export const getPrevSessionSets = (wid, eid, isAll) =>
   new Promise((resolve, reject) => {
     db.transaction((tx) => {
       if (isAll) {
@@ -104,6 +120,22 @@ export const getPrevSession = (wid, eid, isAll) =>
           }
         );
       }
+    });
+  });
+
+  export const getPrevSession = (wid, eid) =>
+  new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT sess.id, DATETIME(sess.date, 'localtime') FROM Sessions sess WHERE sess.workoutId = ? AND sess.isComplete = 1 ORDER BY sess.id DESC ",
+          [wid],
+          function (tx, results) {
+            resolve(results.rows._array);
+          },
+          function (tx, error) {
+            reject("Error INSERT ALL PREV", error.message);
+          }
+        );
     });
   });
 

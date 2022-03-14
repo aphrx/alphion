@@ -75,90 +75,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 0,
     marginBottom: 10,
-    //marginLeft: 25
   },
   items: {
     marginTop: 30,
   },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  workoutWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  workoutTileWrapper: {
-    width: "47%",
-  },
   newWorkoutTile: {
     borderRadius: 20,
   },
-  delete: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#000",
-    borderRadius: 20,
-    elevation: 3,
-    alignItems: "center",
-    marginHorizontal: 20,
-    marginTop: 20,
-  },
-  doneText: {
-    color: "#ff6666",
-    fontSize: 20,
-  },
   exerciseSection: {
     marginBottom: 10,
-  },
-  start: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#0cc98f",
-    borderRadius: 20,
-    elevation: 3,
-    alignItems: "center",
-    margin: 20,
-    marginTop: 0,
-  },
-  prevButton: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#007aff",
-    borderRadius: 20,
-    elevation: 3,
-    alignItems: "center",
-    margin: 20,
-    marginTop: 0,
-  },
-  startText: {
-    color: "#fff",
-    fontSize: 20,
-  },
-  modal: {
-    margin: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  modalContainer: {
-    justifyContent: "center",
-    backgroundColor: "#353535",
-    paddingTop: 30,
-    paddingBottom: 50,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-  },
-  modalHeader: {
-    fontSize: 22,
-    color: "#fff",
-    paddingVertical: 20,
   },
 });
 

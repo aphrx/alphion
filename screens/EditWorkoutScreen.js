@@ -46,7 +46,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
         exerciseList[i].exerciseReps == null
       ) {
         Toast.show("Some exercises do not have sets and/or reps.");
-        return false; 
+        return false;
       }
     }
     if (name.trim() == "") {
@@ -116,7 +116,6 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   };
 
   const onDelete = (i) => {
-    
     let temp = exerciseList;
     temp.splice(i, 1);
     setExerciseList([...temp]);
@@ -132,7 +131,6 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   };
 
   const handleDeleteWorkout = (workoutId) => {
-    
     deleteTask(workoutId);
     navigation.pop(2);
   };
@@ -141,26 +139,24 @@ const EditWorkoutScreen = ({ route, navigation }) => {
     <View style={styles.modalContainer}>
       <View style={styles.centerContainer}>
         <Text style={styles.modalHeader}>Delete Workout</Text>
-        <Text style={styles.modalText}>Do you confirm that you want to delete the workout?</Text>
+        <Text style={styles.modalText}>
+          Do you confirm that you want to delete the workout?
+        </Text>
       </View>
       <TouchableOpacity
         style={styles.add}
-        onPress={() =>
-          handleDeleteWorkout(workoutId)
-        }
+        onPress={() => handleDeleteWorkout(workoutId)}
       >
         <Text style={styles.doneText}>Delete</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.defaultButton}
-        onPress={() => sheetRef.current.snapTo(1)
-        }
+        onPress={() => sheetRef.current.snapTo(1)}
       >
         <Text style={styles.doneText}>Cancel</Text>
       </TouchableOpacity>
     </View>
   );
-
 
   return (
     <View style={styles.container}>
@@ -213,7 +209,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
                     onPress={onSelectColor}
                   />
                   <TileOptionButton
-                    key={selectedColour + 80} 
+                    key={selectedColour + 80}
                     opt={3}
                     selected={selectedColour}
                     onPress={onSelectColor}
@@ -283,7 +279,6 @@ const EditWorkoutScreen = ({ route, navigation }) => {
         renderContent={this.renderInner}
         initialSnap={1}
         enabledInnerScrolling={false}
-        // onCloseEnd={() => setIsOpen(0)}
       />
     </View>
   );
@@ -336,19 +331,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 25,
   },
-  items: {
-    marginTop: 30,
-  },
-  items: {
-    marginTop: 30,
-  },
-  writeTaskWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
@@ -362,13 +344,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
-  workoutTileWrapper: {
-    width: "47%",
-  },
   newWorkoutTile: {
     borderRadius: 20,
   },
-  
   add: {
     color: "#fff",
     padding: 50,
@@ -378,7 +356,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 3,
     margin: 20,
-    marginBottom: 0
+    marginBottom: 0,
   },
   defaultButton: {
     color: "#fff",
@@ -388,7 +366,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 3,
     margin: 20,
-    backgroundColor: "#007AFF"
+    backgroundColor: "#007AFF",
   },
   addExercise: {
     backgroundColor: "#1B1B1B",
@@ -411,29 +389,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
-  editButton: {
-    margin: 10,
-  },
-  editIcon: {
-    color: "#fff",
-    fontSize: 20,
-    marginTop: 10,
-    marginRight: 10,
-  },
   imageOptions: {
-    //backgroundColor: '#fff',
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-end",
     height: 50,
     paddingRight: 15,
-  },
-  colorOptions: {
-    padding: 20,
-    //backgroundColor: '#000',
-    width: 20,
-    borderRadius: 20,
-    margin: 5,
   },
   trashIcon: {
     color: "#fff",
@@ -447,16 +408,6 @@ const styles = StyleSheet.create({
   doneText: {
     color: "#fff",
     fontSize: 20,
-  },
-  modalTextInput: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    backgroundColor: "#1b1b1b",
-    color: "#fff",
-    borderRadius: 20,
-    width: "90%",
-    marginVertical: 10,
-    marginHorizontal: 10,
   },
   modalContainer: {
     justifyContent: "center",

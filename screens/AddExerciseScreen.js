@@ -12,12 +12,10 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import BottomSheet from "reanimated-bottom-sheet";
 import ExerciseTile from "../components/ExerciseTile";
 import { getExerciseOptions, insertExerciseOption } from "../services/Database";
-import { useIsFocused } from "@react-navigation/native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const AddExerciseScreen = ({ route, navigation }) => {
   const [exercises, setExercises] = useState([]);
-  const isFocused = useIsFocused();
   const [page, setPage] = useState(1);
   const sheetRef = useRef(null);
   const [customExercise, setCustomExercise] = useState(null);
@@ -26,10 +24,8 @@ const AddExerciseScreen = ({ route, navigation }) => {
   const [isOpen, setIsOpen] = useState(0);
 
   useEffect(() => {
-    if (isFocused) {
-      load_exercises(1);
-    }
-  }, [isFocused]);
+    load_exercises(1);
+  }, []);
 
   async function load_exercises(page) {
     let exerc = await getExerciseOptions(page, search);
@@ -46,10 +42,10 @@ const AddExerciseScreen = ({ route, navigation }) => {
     );
   };
 
-  async function renameWorkout(txt) {
+  async function handleSearch(txt) {
     setSearch(txt);
-    let exerc = await getExerciseOptions(page, search);
-    setExercises(exerc);
+    let exerc = await getExerciseOptions(1, txt);
+    setExercises([...exerc]);
   }
 
   const handleAddExercise = (id, exercise, muscle) => {
@@ -118,7 +114,7 @@ const AddExerciseScreen = ({ route, navigation }) => {
             style={styles.input}
             placeholder={"Search"}
             placeholderTextColor={"#fff"}
-            onChangeText={async (text) => await renameWorkout(text)}
+            onChangeText={async (text) => await handleSearch(text)}
           />
           {exercises.map(({ id, exercise, muscle }) => {
             return (

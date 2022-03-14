@@ -14,7 +14,6 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const WorkoutTileLg = (props) => {
   const backgrounds = [PinkImage, GreenImage, BlueImage, PurpleImage];
-  const [date, setDate] = useState("");
 
   return (
     <View style={styles.cardContainer}>
@@ -36,7 +35,7 @@ const WorkoutTileLg = (props) => {
               </TouchableOpacity>
             ) : (
               <View />
-            )} 
+            )}
             {props.isDeletable ? (
               <TouchableOpacity onPress={() => props.onDelete(props.wid)}>
                 <FontAwesome5
@@ -50,25 +49,15 @@ const WorkoutTileLg = (props) => {
             )}
           </View>
         </View>
-        {/* <Text style={styles.timerStyle}>11:58</Text> */}
       </ImageBackground>
     </View>
   );
 };
 const styles = StyleSheet.create({
-  cardContainer: {},
   item: {
     flexDirection: "column",
     height: 150,
     marginBottom: 20,
-  },
-  timerStyle: {
-    fontWeight: "bold",
-    color: "#fff",
-    fontSize: 50,
-    paddingTop: 10,
-    paddingHorizontal: 20,
-    textAlign: "center",
   },
   workoutText: {
     fontWeight: "bold",
@@ -76,9 +65,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     paddingTop: 10,
     paddingHorizontal: 20,
-  },
-  dateText: {
-    color: "#fff",
   },
   imageInner: {
     flexDirection: "row",

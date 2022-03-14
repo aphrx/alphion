@@ -11,8 +11,10 @@ import RepTile from "./RepTile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import {
   getSetsForExercise,
-  getPrevSession,
   insertSet,
+  updateSet,
+  getPrevSessionSets,
+  deleteSet,
 } from "../services/Database";
 import Toast from "react-native-simple-toast";
 
@@ -28,18 +30,18 @@ const LiveExerciseCard = (props) => {
       temp[i].reps = sets[i].reps;
       temp[i].isComplete = 1;
     }
-    return temp
+    return temp;
   };
 
   const loadHistorySets = async (temp) => {
-    let pSess = await getPrevSession(props.wid, false);
+    let pSess = await getPrevSessionSets(props.wid, false);
     let sets = await getSetsForExercise(props.wid, pSess.id, props.eid);
     for (let i = 0; i < sets.length; i++) {
       temp[i].lbs = sets[i].weight;
       temp[i].reps = sets[i].reps;
       temp[i].isComplete = 0;
     }
-    return temp
+    return temp;
   };
 
   const assignSetList = async () => {
@@ -53,7 +55,6 @@ const LiveExerciseCard = (props) => {
       });
     }
     temp = await loadHistorySets(temp);
-    console.log(temp)
     if (props.prevWorkoutSession) {
       temp = await loadPrevSetStates(temp);
     }
@@ -78,6 +79,24 @@ const LiveExerciseCard = (props) => {
     } else {
       Toast.show("Set does not have weight and/or reps.");
     }
+  };
+
+  const onUpdate = (index, weight, reps, completion) => {
+    let temp = setsList;
+    if (weight != null && reps != null) {
+      temp[index - 1].isComplete = completion;
+      setSetsList([...temp]);
+      updateSet(props.wid, props.eid, props.sid, index, weight, reps);
+    } else {
+      Toast.show("Invalid set update request.");
+    }
+  };
+
+  const onUncomplete = (index) => {
+    let temp = setsList;
+    deleteSet(props.wid, props.eid, props.sid, index);
+    temp[index - 1].isComplete = 0;
+    setSetsList([...temp]);
   };
 
   const removeSet = () => {
@@ -114,7 +133,7 @@ const LiveExerciseCard = (props) => {
         <Text style={styles.setHeader}>SETS</Text>
         <View style={styles.setWrapper}>
           <TouchableOpacity
-            style={styles.setButton}
+            style={styles.setItems}
             onPress={() => {
               removeSet();
               setSets(sets - 1);
@@ -122,9 +141,9 @@ const LiveExerciseCard = (props) => {
           >
             <FontAwesome5 style={styles.setButtonText} name={"minus"} solid />
           </TouchableOpacity>
-          <Text style={styles.setNumber}>{sets}</Text>
+          <Text style={styles.setItems}>{sets}</Text>
           <TouchableOpacity
-            style={styles.setButton}
+            style={styles.setItems}
             onPress={() => {
               addSet();
               setSets(sets + 1);
@@ -143,6 +162,8 @@ const LiveExerciseCard = (props) => {
               reps={reps}
               isComplete={isComplete}
               onComplete={onComplete}
+              onUpdate={onUpdate}
+              onUncomplete={onUncomplete}
             />
           );
         })}
@@ -201,11 +222,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
-  setNumber: {
-    color: "#fff",
-    fontSize: 30,
-  },
-  setButton: {
+  setItems: {
     color: "#fff",
     fontSize: 30,
   },
@@ -218,20 +235,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     alignItems: "center",
-  },
-  doneButton: {
-    color: "#fff",
-    padding: 50,
-    paddingVertical: 14,
-    backgroundColor: "#0cc98f",
-    borderRadius: 20,
-    elevation: 3,
-    alignItems: "center",
-    margin: 20,
-  },
-  doneText: {
-    color: "#fff",
-    fontSize: 20,
   },
 });
 
