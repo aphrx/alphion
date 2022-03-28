@@ -3,19 +3,10 @@ import { View, StyleSheet, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 const ExerciseGraph = (props) => {
-  const labelArr = (len) => {
-    var a = [];
-    for (var i = 1; i < len; i++) {
-      a.push(i);
-    }
-    return a;
-  };
-
   return (
     <View style={styles.item}>
       <LineChart
         data={{
-          labels: labelArr(props.data.length - 1),
           datasets: [
             {
               data: props.data.slice(
@@ -59,6 +50,7 @@ const styles = StyleSheet.create({
   },
   graphStyle: {
     borderRadius: 16,
+    marginBottom: -50
   },
 });
 

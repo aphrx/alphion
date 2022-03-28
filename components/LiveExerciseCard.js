@@ -15,6 +15,7 @@ import {
   updateSet,
   getPrevSessionSets,
   deleteSet,
+  getLastSetsForExercise,
 } from "../services/Database";
 import Toast from "react-native-simple-toast";
 
@@ -35,7 +36,7 @@ const LiveExerciseCard = (props) => {
 
   const loadHistorySets = async (temp) => {
     let pSess = await getPrevSessionSets(props.wid, false);
-    let sets = await getSetsForExercise(props.wid, pSess.id, props.eid);
+    let sets = await getLastSetsForExercise(props.wid, props.eid);
     for (let i = 0; i < sets.length; i++) {
       temp[i].lbs = sets[i].weight;
       temp[i].reps = sets[i].reps;
@@ -136,7 +137,9 @@ const LiveExerciseCard = (props) => {
             style={styles.setItems}
             onPress={() => {
               removeSet();
-              setSets(sets - 1);
+              if(sets != 0) {
+                setSets(sets - 1);
+              }
             }}
           >
             <FontAwesome5 style={styles.setButtonText} name={"minus"} solid />

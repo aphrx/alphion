@@ -130,7 +130,7 @@ const AddExerciseScreen = ({ route, navigation }) => {
       </View>
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[340, 0]}
+        snapPoints={[340, -1000]}
         borderRadius={20}
         renderContent={this.renderInner}
         initialSnap={1}

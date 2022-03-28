@@ -7,8 +7,8 @@ import {
   TextInput,
   ImageBackground,
   Keyboard,
+  TouchableOpacity
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import ExerciseTileWithSets from "../components/ExerciseTileWithSets.js";
 import {
   insertExercise,
@@ -65,7 +65,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   };
 
   const handleUpdateWorkout = async () => {
-    Keyboard.dismiss();
+
     if (checkIfValid()) {
       updateWorkoutMeta();
       deleteExercises(workoutId);
@@ -81,6 +81,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
       }
       navigation.goBack();
     }
+    Keyboard.dismiss();
   };
 
   const handleAddExercise = () => {
@@ -274,7 +275,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
       </TouchableOpacity>
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[300, 0]}
+        snapPoints={[300, -1000]}
         borderRadius={20}
         renderContent={this.renderInner}
         initialSnap={1}
@@ -364,7 +365,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: "center",
     borderRadius: 20,
-    elevation: 3,
     margin: 20,
     backgroundColor: "#007AFF",
   },
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     justifyContent: "center",
-    elevation: 5,
+    elevation: 10,
     backgroundColor: "#0F0F0F",
     paddingVertical: 20,
     borderTopRightRadius: 20,

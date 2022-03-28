@@ -20,6 +20,7 @@ const WorkoutTile = (props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   cardContainer: {
     width: "100%",

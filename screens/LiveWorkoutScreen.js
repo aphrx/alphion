@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dimensions } from "react";
 import {
   StyleSheet,
   Text,
@@ -18,6 +18,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import PrevSessionTile from "../components/PrevSessionTile";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import moment from "moment";
+import LastSessionTile from "../components/LastSessionTile.js";
 
 const LiveWorkoutScreen = ({ route, navigation }) => {
   const { workoutId, workoutName, sessionId, tileColour, prevWorkoutSession } =
@@ -112,20 +113,23 @@ const LiveWorkoutScreen = ({ route, navigation }) => {
                       prevWorkoutSession={prevWorkoutSession}
                       toExercise={toExercise}
                     />
-                    <PrevSessionTile
+                    <LastSessionTile
                       key={prevSession}
-                      pSession={prevSession}
                       title={moment(prevSession.date).format("MMMM Do YYYY")}
                       wid={workoutId}
                       eid={exerciseId}
                     />
+                    <View style={styles.bumper}></View>
                   </View>
                 );
               }
             )}
           </ScrollView>
         </View>
-        <TouchableOpacity
+        
+      </ScrollView>
+      <View style={styles.floatingButton}>
+      <TouchableOpacity
           style={styles.start}
           onPress={() => {
             completeSession(sessionId);
@@ -134,7 +138,7 @@ const LiveWorkoutScreen = ({ route, navigation }) => {
         >
           <Text style={styles.startText}>Complete</Text>
         </TouchableOpacity>
-      </ScrollView>
+        </View>
     </View>
   );
 };
@@ -159,12 +163,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 3,
     alignItems: "center",
-    margin: 20,
+    width: '100%',
+    position: 'absolute',
+    zIndex: 100,
+    bottom: 0
+  },
+  floatingButton:{
+    margin: 20
   },
   startText: {
     color: "#fff",
     fontSize: 20,
   },
+  bumper: {
+    height: 50
+  }
 });
 
 export default LiveWorkoutScreen;

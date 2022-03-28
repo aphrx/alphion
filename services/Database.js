@@ -9,6 +9,13 @@ export const deleteTask = (id) => {
   });
 };
 
+export const deleteSession = (id) => {
+  db.transaction((tx) => {
+    tx.executeSql("DELETE FROM Sessions WHERE id = ?", [id]);
+    tx.executeSql("DELETE FROM Sets WHERE sessionId = ?", [id]);
+  });
+};
+
 export const insertTask = (name, colourOption) =>
   new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -19,7 +26,7 @@ export const insertTask = (name, colourOption) =>
           resolve(results.insertId);
         },
         function (tx, error) {
-          reject("Error INSERT Task ", error.message);
+          reject("Insert Workout Error: ", error.message);
         }
       );
     });
@@ -127,13 +134,20 @@ export const getPrevSessionSets = (wid, eid, isAll) =>
   new Promise((resolve, reject) => {
     db.transaction((tx) => {
         tx.executeSql(
-          "SELECT sess.id, DATETIME(sess.date, 'localtime') FROM Sessions sess WHERE sess.workoutId = ? AND sess.isComplete = 1 ORDER BY sess.id DESC ",
-          [wid],
+          "SELECT DISTINCT sess.id, DATETIME(sess.date, 'localtime') as date\
+           FROM Sessions sess \
+           INNER JOIN Sets s \
+           ON sess.id = s.sessionId \
+           WHERE sess.workoutId = ? \
+           AND s.exerciseId = ?\
+           AND sess.isComplete = 1 \
+           ORDER BY sess.id DESC ",
+          [wid, eid],
           function (tx, results) {
             resolve(results.rows._array);
           },
           function (tx, error) {
-            reject("Error INSERT ALL PREV", error.message);
+            reject("Error getPrevSession", error.message);
           }
         );
     });
@@ -167,6 +181,39 @@ export const getSetsForExercise = (wid, sid, eid) =>
       tx.executeSql(
         "SELECT * FROM Sets WHERE workoutId = ? AND sessionId = ? AND exerciseId = ? ORDER BY setIndex ASC",
         [wid, sid, eid],
+        function (tx, results) {
+          resolve(results.rows._array);
+        },
+        function (tx, error) {
+          reject("Error INSERT GET SETS ", error.message);
+        }
+      );
+    });
+  });
+
+  export const getLastSetsForExercise = (wid, eid) =>
+  new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT s.*, sess.date \
+        FROM Sets s \
+        LEFT JOIN Sessions sess \
+        ON s.sessionId = sess.id \
+        WHERE s.workoutId = ? \
+        AND s.exerciseId = ? \
+        AND sess.isComplete = 1 \
+        AND s.sessionId \
+        IN (\
+          SELECT s.sessionId \
+          FROM Sets s \
+          LEFT JOIN Sessions sess \
+          WHERE s.workoutId = ? \
+          AND s.exerciseId = ? \
+          AND sess.isComplete = 1 \
+          ORDER BY s.sessionId DESC LIMIT 1) \
+        ORDER BY s.sessionId, s.setIndex \
+        ASC",
+        [wid, eid, wid, eid],
         function (tx, results) {
           resolve(results.rows._array);
         },
