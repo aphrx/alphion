@@ -51,11 +51,15 @@ const LiveWorkoutScreen = ({ route, navigation }) => {
     });
   };
 
+  const toCamera = () => {
+    navigation.navigate("CameraScreen")
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.tasksWrapper}>
-          <WorkoutTileLg workoutText={workoutName} tileColour={tileColour} />
+          <WorkoutTileLg workoutText={workoutName} tileColour={tileColour} toCamera={toCamera}/>
         </View>
 
         <View style={styles.exerciseWrapper}>

@@ -207,6 +207,7 @@ export const getSetsForExercise = (wid, sid, eid) =>
           SELECT s.sessionId \
           FROM Sets s \
           LEFT JOIN Sessions sess \
+          ON s.sessionId = sess.id \
           WHERE s.workoutId = ? \
           AND s.exerciseId = ? \
           AND sess.isComplete = 1 \
@@ -218,7 +219,7 @@ export const getSetsForExercise = (wid, sid, eid) =>
           resolve(results.rows._array);
         },
         function (tx, error) {
-          reject("Error INSERT GET SETS ", error.message);
+          reject("Error getLastSetsForExercise ", error.message);
         }
       );
     });

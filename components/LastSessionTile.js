@@ -23,11 +23,9 @@ const LastSessionTile = (props) => {
       if (!props.title) {
         setExerciseName(await getExerciseName(props.eid));
       }
-
       if(s.length > 0){
         setSessionDate(s[0].date)
       }
-
       setSetsList(s);
       if (props.getTenRM) {
         findHighestTenRM(s);

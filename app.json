@@ -2,7 +2,7 @@
   "expo": {
     "name": "Alphion",
     "slug": "alphion",
-    "version": "1.0.9",
+    "version": "1.0.11",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,7 +27,7 @@
       },
       "permissions": [],
       "package": "com.aphrx.alphion",
-      "versionCode": 9
+      "versionCode": 11
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -34,7 +34,15 @@ const WorkoutTileLg = (props) => {
                 />
               </TouchableOpacity>
             ) : (
-              <View />
+              <>
+                {/* <TouchableOpacity onPress={() => props.toCamera()}>
+                  <FontAwesome5
+                    name={"camera"}
+                    style={styles.cameraIcon}
+                    solid
+                  />
+                </TouchableOpacity> */}
+              </>
             )}
             {props.isDeletable ? (
               <TouchableOpacity onPress={() => props.onDelete(props.wid)}>
@@ -75,6 +83,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     margin: 10,
+  },
+  cameraIcon: {
+    color: "#fff",
+    fontSize: 20,
+    marginRight: 10,
+    marginTop:5
   },
   buttons: {
     flexDirection: "row",

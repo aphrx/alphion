@@ -27,27 +27,47 @@ const LiveExerciseCard = (props) => {
   const loadPrevSetStates = async (temp) => {
     let sets = await getSetsForExercise(props.wid, props.sid, props.eid);
     for (let i = 0; i < sets.length; i++) {
-      temp[i].lbs = sets[i].weight;
-      temp[i].reps = sets[i].reps;
-      temp[i].isComplete = 1;
+      if(temp.length > i){
+        temp[i].lbs = sets[i].weight;
+        temp[i].reps = sets[i].reps;
+        temp[i].isComplete = 1;
+      }
+      else {
+        temp.push({
+          index: i,
+          lbs: sets[i].weight,
+          reps: sets[i].reps,
+          isComplete: 1,
+        });
+      }
+      
     }
     return temp;
   };
 
   const loadHistorySets = async (temp) => {
-    let pSess = await getPrevSessionSets(props.wid, false);
     let sets = await getLastSetsForExercise(props.wid, props.eid);
     for (let i = 0; i < sets.length; i++) {
-      temp[i].lbs = sets[i].weight;
-      temp[i].reps = sets[i].reps;
-      temp[i].isComplete = 0;
+      if(temp.length > i){
+        temp[i].lbs = sets[i].weight;
+        temp[i].reps = sets[i].reps;
+        temp[i].isComplete = 0;
+      }
+      else {
+        temp.push({
+          index: i,
+          lbs: sets[i].weight,
+          reps: sets[i].reps,
+          isComplete: 0,
+        });
+      }
     }
     return temp;
   };
 
   const assignSetList = async () => {
     let temp = [];
-    for (let i = 1; i <= sets; i++) {
+    for (let i = 0; i < sets; i++) {
       temp.push({
         index: i,
         lbs: null,
@@ -60,6 +80,7 @@ const LiveExerciseCard = (props) => {
       temp = await loadPrevSetStates(temp);
     }
     setSetsList(temp);
+    setSets(temp.length)
   };
 
   useEffect(() => {
@@ -71,10 +92,10 @@ const LiveExerciseCard = (props) => {
 
   const onComplete = (i, l, r) => {
     let temp = setsList;
-    temp[i - 1].lbs = l;
-    temp[i - 1].reps = r;
+    temp[i].lbs = l;
+    temp[i].reps = r;
     if (l != null && r != null) {
-      temp[i - 1].isComplete = 1;
+      temp[i].isComplete = 1;
       setSetsList([...temp]);
       insertSet(props.wid, props.eid, props.sid, i, l, r);
     } else {
@@ -107,7 +128,7 @@ const LiveExerciseCard = (props) => {
   const addSet = () => {
     let temp = setsList;
     temp.push({
-      index: setsList.length + 1,
+      index: setsList.length,
       lbs: null,
       reps: props.reps,
       isComplete: 0,

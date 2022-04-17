@@ -9,14 +9,18 @@ import {
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const RepTile = (props) => {
-  const [lbsValue, setLbsValue] = useState(props.lbs);
-  const [repsValue, setRepsValue] = useState(props.reps);
+  const [lbsValue, setLbsValue] = useState(props.lbs?`${props.lbs}`:'');
+  const [repsValue, setRepsValue] = useState(props.reps?`${props.reps}`:'');
 
   const updateValues = (lbs, reps) => {
     if (props.isComplete) {
       props.onUpdate(props.index, lbs, reps, props.isComplete);
     }
   };
+
+  const numbersOnly = (value) => {
+    return(value.replace(/[- #*;,+()N<>\{\}\[\]\\\/]/gi, ''))
+  }
 
   return (
     <View style={styles.item}>
@@ -27,15 +31,14 @@ const RepTile = (props) => {
               Platform.OS === "android" ? "phone-pad" : "number-pad"
             }
             style={styles.editableSetAdjustmentText}
-            placeholder="-"
             placeholderTextColor={"#fff"}
+            placeholder="-"
+            value={lbsValue}
             onChangeText={(text) => {
-              setLbsValue(text);
+              setLbsValue(numbersOnly(text));
               updateValues(text, repsValue);
             }}
-          >
-            {lbsValue}
-          </TextInput>
+          />
         </View>
         <View style={styles.exerciseSetAdjustment}>
           <TextInput
@@ -43,15 +46,14 @@ const RepTile = (props) => {
               Platform.OS === "android" ? "phone-pad" : "number-pad"
             }
             style={styles.editableSetAdjustmentText}
-            placeholder="-"
             placeholderTextColor={"#fff"}
+            placeholder="-"
             onChangeText={(text) => {
-              setRepsValue(text);
+              setRepsValue(numbersOnly(text));
               updateValues(lbsValue, text);
             }}
-          >
-            {repsValue}
-          </TextInput>
+            value={repsValue}
+          />
         </View>
         <TouchableOpacity
           style={props.isComplete ? styles.checkButton : styles.checkButtonNC}
