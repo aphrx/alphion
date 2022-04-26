@@ -71,6 +71,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   };
 
   const startWorkout = async () => {
+    console.log("Starting workout")
     let sid = await insertSession(workoutId);
 
     navigation.navigate("LiveWorkoutScreen", {
@@ -84,6 +85,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   };
 
   const continueWorkout = async () => {
+    console.log("Continuing workout")
     navigation.navigate("LiveWorkoutScreen", {
       workoutId: workoutId,
       workoutName: workoutName,
@@ -213,9 +215,10 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
       </TouchableOpacity>
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[180, 0]}
+        snapPoints={[180, -1000]}
         borderRadius={20}
         renderContent={renderInner}
+        enabledContentTapInteraction={false}
         initialSnap={1}
         enabledInnerScrolling={false}
       />
@@ -225,6 +228,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? 0 : 40,
     flex: 1,
     backgroundColor: "#000",
   },

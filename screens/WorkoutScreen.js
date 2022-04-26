@@ -5,7 +5,9 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import WorkoutTile from "../components/WorkoutTile";
 import CreateWorkoutBtn from "../components/CreateWorkoutBtn";
 import { createTable, db, getSessions } from "../services/Database";
@@ -36,6 +38,7 @@ const WorkoutScreen = ({ navigation }) => {
   }, [isFocused]);
 
   return (
+    <SafeAreaProvider>
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.tasksWrapper}>
@@ -79,6 +82,7 @@ const WorkoutScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </View>
+    </SafeAreaProvider>
   );
 };
 
@@ -87,6 +91,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   container: {
+    paddingTop: Platform.OS === "android" ? 0 : 40,
     flex: 1,
     backgroundColor: "#000",
   },

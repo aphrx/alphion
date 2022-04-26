@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   container: {
+    paddingTop: Platform.OS === "android" ? 0 : 40,
     flex: 1,
     backgroundColor: "#000",
   },

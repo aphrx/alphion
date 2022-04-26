@@ -16,7 +16,7 @@ import PinkImage from "../assets/pink.png";
 import BlueImage from "../assets/blue.png";
 import PurpleImage from "../assets/purple.png";
 import TileOptionButton from "../components/TileOptionButton.js";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 
 const AddWorkoutScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -26,7 +26,7 @@ const AddWorkoutScreen = ({ navigation }) => {
 
   const checkIfValid = () => {
     if (exerciseList.length == 0) {
-      Toast.show("Workout does not have any exercises.");
+      // Toast.show("Workout does not have any exercises.");
       return false;
     }
     for (let i = 0; i < exerciseList.length; i++) {
@@ -36,12 +36,12 @@ const AddWorkoutScreen = ({ navigation }) => {
         exerciseList[i].reps == "" ||
         exerciseList[i].reps == null
       ) {
-        Toast.show("Some exercises do not have sets and/or reps.");
+        // Toast.show("Some exercises do not have sets and/or reps.");
         return false;
       }
     }
     if (name.trim() == "") {
-      Toast.show("Workout does not have a name.");
+      // Toast.show("Workout does not have a name.");
       return false;
     }
     return true;
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   container: {
+    paddingTop: Platform.OS === "android" ? 0 : 40,
     flex: 1,
     backgroundColor: "#000",
   },

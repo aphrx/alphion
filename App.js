@@ -11,7 +11,6 @@ import LiveWorkoutScreen from './screens/LiveWorkoutScreen';
 import ExerciseScreen from './screens/ExerciseScreen';
 import SessionScreen from './screens/SessionScreen';
 import AllSessionScreen from './screens/AllSessionScreen';
-import CameraScreen from './screens/CameraScreen';
 
 const Stack = createStackNavigator()
 
@@ -35,7 +34,6 @@ const App = () => {
         <Stack.Screen name="ExerciseScreen" component={ExerciseScreen} />
         <Stack.Screen name="SessionScreen" component={SessionScreen} />
         <Stack.Screen name="AllSessionScreen" component={AllSessionScreen} />
-        <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </View>

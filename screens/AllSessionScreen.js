@@ -4,7 +4,6 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { db, getAllSessions } from "../services/Database.js";
 import { useIsFocused } from "@react-navigation/native";
 import SessionTile from "../components/SessionTile.js";
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 const AllSessionScreen = ({ navigation }) => {
   const [sessions, setSessions] = useState([]);
@@ -56,6 +55,7 @@ const AllSessionScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? 0 : 40,
     flex: 1,
     backgroundColor: "#000",
   },

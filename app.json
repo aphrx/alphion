@@ -2,7 +2,7 @@
   "expo": {
     "name": "Alphion",
     "slug": "alphion",
-    "version": "1.0.11",
+    "version": "1.0.13",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -17,7 +17,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "1.0.13",
+      "bundleIdentifier": "com.aphrx.alphion"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
@@ -27,7 +29,7 @@
       },
       "permissions": [],
       "package": "com.aphrx.alphion",
-      "versionCode": 11
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/favicon.png"

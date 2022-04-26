@@ -17,7 +17,7 @@ import {
   deleteSet,
   getLastSetsForExercise,
 } from "../services/Database";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 
 const screenWidth = Dimensions.get("window").width;
 const LiveExerciseCard = (props) => {
@@ -99,7 +99,7 @@ const LiveExerciseCard = (props) => {
       setSetsList([...temp]);
       insertSet(props.wid, props.eid, props.sid, i, l, r);
     } else {
-      Toast.show("Set does not have weight and/or reps.");
+      // Toast.show("Set does not have weight and/or reps.");
     }
   };
 
@@ -110,7 +110,7 @@ const LiveExerciseCard = (props) => {
       setSetsList([...temp]);
       updateSet(props.wid, props.eid, props.sid, index, weight, reps);
     } else {
-      Toast.show("Invalid set update request.");
+      // Toast.show("Invalid set update request.");
     }
   };
 

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     margin: 5,
     borderColor: "#fff",
-    borderWidth: 2,
+    borderWidth: 2
   },
 });
 
