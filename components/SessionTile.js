@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   exerciseText: {
     fontWeight: "bold",
     color: "#fff",
-    textTransform: "capitalize",
   },
   text: {
     color: "#fff",

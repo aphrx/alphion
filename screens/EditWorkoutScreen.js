@@ -7,7 +7,7 @@ import {
   TextInput,
   ImageBackground,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import ExerciseTileWithSets from "../components/ExerciseTileWithSets.js";
 import {
@@ -22,8 +22,8 @@ import BlueImage from "../assets/blue.png";
 import PurpleImage from "../assets/purple.png";
 import TileOptionButton from "../components/TileOptionButton.js";
 // import Toast from "react-native-simple-toast";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import BottomSheet from "reanimated-bottom-sheet";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const EditWorkoutScreen = ({ route, navigation }) => {
   const { workoutName, workoutExercises, workoutId, tileColour } = route.params;
@@ -65,7 +65,6 @@ const EditWorkoutScreen = ({ route, navigation }) => {
   };
 
   const handleUpdateWorkout = async () => {
-
     if (checkIfValid()) {
       updateWorkoutMeta();
       deleteExercises(workoutId);
@@ -136,7 +135,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
     navigation.pop(2);
   };
 
-  renderInner = () => (
+  const renderInner = () => (
     <View style={styles.modalContainer}>
       <View style={styles.centerContainer}>
         <Text style={styles.modalHeader}>Delete Workout</Text>
@@ -171,13 +170,22 @@ const EditWorkoutScreen = ({ route, navigation }) => {
                 imageStyle={{ borderRadius: 20 }}
               >
                 <View style={styles.imageInner}>
-                  <TextInput
-                    style={styles.imageText}
-                    value={name}
-                    placeholder={"New Workout"}
-                    onChangeText={(text) => renameWorkout(text)}
-                    autoFocus={true}
-                  />
+                  <View style={styles.titleHeader}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                      <FontAwesome5
+                        name={"angle-left"}
+                        style={styles.backIcon}
+                        solid
+                      />
+                    </TouchableOpacity>
+                    <TextInput
+                      style={styles.imageText}
+                      value={name}
+                      placeholder={"New Workout"}
+                      onChangeText={(text) => renameWorkout(text)}
+                      autoFocus={true}
+                    />
+                  </View>
                   <View style={styles.buttons}>
                     <TouchableOpacity
                       onPress={() => sheetRef.current.snapTo(0)}
@@ -277,7 +285,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
         ref={sheetRef}
         snapPoints={[300, -1000]}
         borderRadius={20}
-        renderContent={this.renderInner}
+        renderContent={renderInner}
         initialSnap={1}
         enabledInnerScrolling={false}
       />
@@ -417,6 +425,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    height: 1000,
+    justifyContent: "flex-start"
   },
   centerContainer: {
     alignItems: "center",
@@ -430,6 +440,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     paddingVertical: 5,
+  },
+  backIcon: {
+    color: "#fff",
+    fontSize: 30,
+    paddingTop: 10,
+    paddingLeft: 10,
+  },
+  titleHeader: {
+    flexDirection: "row",
+    margin: 5,
+    width: '80%'
   },
 });
 

@@ -59,7 +59,7 @@ const LiveWorkoutScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.tasksWrapper}>
-          <WorkoutTileLg workoutText={workoutName} tileColour={tileColour} toCamera={toCamera}/>
+          <WorkoutTileLg workoutText={workoutName} tileColour={tileColour} toCamera={toCamera} goBack={navigation.goBack}/>
         </View>
 
         <View style={styles.exerciseWrapper}>

@@ -146,6 +146,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
               tileColour={tileColour}
               isEditable={true}
               onEdit={onEdit}
+              goBack={navigation.goBack}
             />
             <View style={styles.exerciseSection}>
               <Text style={styles.sectionTitle}>Exercises</Text>

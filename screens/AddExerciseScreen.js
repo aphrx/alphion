@@ -7,8 +7,8 @@ import {
   TextInput,
   Keyboard,
   KeyboardAvoidingView,
+  TouchableOpacity
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import BottomSheet from "reanimated-bottom-sheet";
 import ExerciseTile from "../components/ExerciseTile";
 import { getExerciseOptions, insertExerciseOption } from "../services/Database";
@@ -54,6 +54,7 @@ const AddExerciseScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
   const handleAddCustomExercise = async (exercise, muscle) => {
+    console.log("adding")
     let id = await insertExerciseOption(exercise, muscle, 1);
     route.params.onReturn({ id, exercise, muscle, sets: null, reps: null });
     navigation.goBack();
@@ -92,6 +93,7 @@ const AddExerciseScreen = ({ route, navigation }) => {
       <View style={styles.container}>
         <ScrollView
           style={styles.scrollView}
+          showsVerticalScrollIndicator={false}
           onScroll={({ nativeEvent }) => {
             if (isCloseToBottom(nativeEvent)) {
               load_exercises(page + 1);
@@ -100,7 +102,17 @@ const AddExerciseScreen = ({ route, navigation }) => {
           }}
         >
           <View style={styles.headerRow}>
-            <Text style={styles.sectionTitle}>Exercises</Text>
+            <View style={styles.titleHeader}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome5
+                  name={"angle-left"}
+                  style={styles.backIcon}
+                  solid
+                />
+              </TouchableOpacity>
+              <Text style={styles.sectionTitle}>Exercises</Text>
+            </View>
+
             <TouchableOpacity
               onPress={() => {
                 isOpen ? setIsOpen(0) : setIsOpen(1);
@@ -130,7 +142,7 @@ const AddExerciseScreen = ({ route, navigation }) => {
       </View>
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[340, -1000]}
+        snapPoints={[650, -1000]}
         borderRadius={20}
         renderContent={this.renderInner}
         initialSnap={1}
@@ -203,12 +215,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   modalContainer: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     elevation: 2,
     backgroundColor: "#0f0f0f",
     paddingVertical: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    height:1000
   },
   centerContainer: {
     alignItems: "center",
@@ -217,6 +230,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#fff",
     paddingVertical: 20,
+  },
+  backIcon: {
+    color: "#fff",
+    fontSize: 30,
+    paddingTop: 4,
+    paddingRight: 10,
+  },
+  titleHeader: {
+    flexDirection: "row",
+    margin: 5,
   },
 });
 

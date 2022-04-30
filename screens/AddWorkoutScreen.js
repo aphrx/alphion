@@ -17,6 +17,7 @@ import BlueImage from "../assets/blue.png";
 import PurpleImage from "../assets/purple.png";
 import TileOptionButton from "../components/TileOptionButton.js";
 // import Toast from "react-native-simple-toast";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const AddWorkoutScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -120,13 +121,22 @@ const AddWorkoutScreen = ({ navigation }) => {
                 imageStyle={{ borderRadius: 20 }}
               >
                 <View style={styles.imageInner}>
-                  <TextInput
-                    style={styles.imageText}
-                    value={name}
-                    placeholder={"New Workout"}
-                    onChangeText={(text) => renameWorkout(text)}
-                    autoFocus={true}
-                  />
+                  <View style={styles.titleHeader}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                      <FontAwesome5
+                        name={"angle-left"}
+                        style={styles.backIcon}
+                        solid
+                      />
+                    </TouchableOpacity>
+                    <TextInput
+                      style={styles.imageText}
+                      value={name}
+                      placeholder={"New Workout"}
+                      onChangeText={(text) => renameWorkout(text)}
+                      autoFocus={true}
+                    />
+                  </View>
                 </View>
                 <View style={styles.imageOptions}>
                   <TileOptionButton
@@ -306,6 +316,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     height: 50,
     paddingRight: 15,
+  },
+  backIcon: {
+    color: "#fff",
+    fontSize: 30,
+    paddingTop: 10,
+    paddingLeft: 10,
+  },
+  titleHeader: {
+    flexDirection: "row",
+    margin: 5,
   },
 });
 

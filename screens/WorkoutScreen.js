@@ -14,6 +14,8 @@ import { createTable, db, getSessions } from "../services/Database";
 import { useIsFocused } from "@react-navigation/native";
 import moment from "moment";
 import ContributionGraphTile from "../components/ContributionGraphTile";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
 
 const WorkoutScreen = ({ navigation }) => {
   const [taskItems, setTaskItems] = useState([]);
@@ -42,7 +44,15 @@ const WorkoutScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.tasksWrapper}>
-          <Text style={styles.sectionTitle}>Workouts</Text>
+          <View style={styles.header}>
+            <Text style={styles.sectionTitle}>Workouts</Text>
+            <TouchableOpacity
+            onPress={() => navigation.navigate("ProfileScreen")}
+          >
+            <FontAwesome5 name={"user-circle"} style={styles.profileIcon} solid />
+            </TouchableOpacity>
+            
+          </View>
           <TouchableOpacity
             onPress={() => navigation.navigate("AllSessionScreen")}
           >
@@ -108,6 +118,10 @@ const styles = StyleSheet.create({
   items: {
     marginTop: 20,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   workoutWrapper: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -116,6 +130,11 @@ const styles = StyleSheet.create({
   workoutTileWrapper: {
     width: "47%",
   },
+  profileIcon:{
+    color: "#fff",
+    fontSize: 35,
+
+  }
 });
 
 export default WorkoutScreen;

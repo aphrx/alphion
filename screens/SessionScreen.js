@@ -24,23 +24,31 @@ const SessionScreen = ({ route, navigation }) => {
         <View style={styles.tasksWrapper}>
           <View style={styles.headerView}>
             <View style={styles.headerMeta}>
-              <Text style={styles.sectionTitle}>
-                {moment.utc(date).local().format("MMMM Do YYYY")}
-              </Text>
+              <View style={styles.titleHeader}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <FontAwesome5
+                    name={"angle-left"}
+                    style={styles.backIcon}
+                    solid
+                  />
+                </TouchableOpacity>
+                <Text style={styles.sectionTitle}>
+                  {moment.utc(date).local().format("MMMM Do YYYY")}
+                </Text>
+              </View>
               <Text style={styles.subTitle}>
                 {moment.utc(date).local().format("h:mm a")}
               </Text>
             </View>
-          
-          <TouchableOpacity
-            onPress={() => {
-              deleteSession(sessionId);
-              navigation.goBack();
-            }
-            }
-          >
-            <FontAwesome5 name={"trash-alt"} style={styles.trashText} solid />
-          </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                deleteSession(sessionId);
+                navigation.goBack();
+              }}
+            >
+              <FontAwesome5 name={"trash-alt"} style={styles.trashText} solid />
+            </TouchableOpacity>
           </View>
         </View>
         {exercises.map((obj, index) => {
@@ -74,13 +82,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     marginTop: 0,
-    textTransform: "capitalize",
   },
   subTitle: {
     color: "#fff",
     fontSize: 20,
     fontWeight: "100",
     marginTop: 0,
+    marginLeft: 30,
     marginBottom: 10,
   },
   headerView: {
@@ -93,6 +101,15 @@ const styles = StyleSheet.create({
     color: "#ff6666",
     fontSize: 25,
     marginRight: 5,
+  },
+  backIcon: {
+    color: "#fff",
+    fontSize: 30,
+    paddingRight: 10,
+  },
+  titleHeader: {
+    flexDirection: "row",
+    margin: 5,
   },
 });
 

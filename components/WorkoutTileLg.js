@@ -23,7 +23,16 @@ const WorkoutTileLg = (props) => {
         imageStyle={{ borderRadius: 20 }}
       >
         <View style={styles.imageInner}>
-          <Text style={styles.workoutText}>{props.workoutText}</Text>
+          <View style={styles.titleHeader}>
+            <TouchableOpacity onPress={() => props.goBack()}>
+              <FontAwesome5
+                name={"angle-left"}
+                style={styles.backIcon}
+                solid
+              />
+            </TouchableOpacity>
+            <Text style={styles.workoutText}>{props.workoutText}</Text>
+          </View>
           <View style={styles.buttons}>
             {props.isEditable ? (
               <TouchableOpacity onPress={() => props.onEdit()}>
@@ -84,6 +93,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 10,
   },
+  backIcon: {
+    color: "#fff",
+    fontSize: 30,
+    paddingTop: 9,
+    paddingLeft: 10,
+
+  },
+  titleHeader: {
+    flexDirection: "row",
+    margin: 5,
+  },
   cameraIcon: {
     color: "#fff",
     fontSize: 20,
@@ -94,6 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
   },
+  
   trashText: {
     color: "#fff",
     fontSize: 20,

@@ -28,9 +28,10 @@ const LiveExerciseCard = (props) => {
     let sets = await getSetsForExercise(props.wid, props.sid, props.eid);
     for (let i = 0; i < sets.length; i++) {
       if(temp.length > i){
-        temp[i].lbs = sets[i].weight;
-        temp[i].reps = sets[i].reps;
-        temp[i].isComplete = 1;
+        console.log(i, sets[i].setIndex)
+        temp[sets[i].setIndex].lbs = sets[i].weight;
+        temp[sets[i].setIndex].reps = sets[i].reps;
+        temp[sets[i].setIndex].isComplete = 1;
       }
       else {
         temp.push({
@@ -106,7 +107,7 @@ const LiveExerciseCard = (props) => {
   const onUpdate = (index, weight, reps, completion) => {
     let temp = setsList;
     if (weight != null && reps != null) {
-      temp[index - 1].isComplete = completion;
+      temp[index].isComplete = completion;
       setSetsList([...temp]);
       updateSet(props.wid, props.eid, props.sid, index, weight, reps);
     } else {
@@ -117,7 +118,7 @@ const LiveExerciseCard = (props) => {
   const onUncomplete = (index) => {
     let temp = setsList;
     deleteSet(props.wid, props.eid, props.sid, index);
-    temp[index - 1].isComplete = 0;
+    temp[index].isComplete = 0;
     setSetsList([...temp]);
   };
 

@@ -4,6 +4,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { db, getAllSessions } from "../services/Database.js";
 import { useIsFocused } from "@react-navigation/native";
 import SessionTile from "../components/SessionTile.js";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const AllSessionScreen = ({ navigation }) => {
   const [sessions, setSessions] = useState([]);
@@ -30,7 +31,17 @@ const AllSessionScreen = ({ navigation }) => {
         <View style={styles.tasksWrapper}>
           <View style={styles.newWorkoutTile}>
             <View style={styles.exerciseSection}>
+            <View style={styles.titleHeader}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <FontAwesome5
+                    name={"angle-left"}
+                    style={styles.backIcon}
+                    solid
+                  />
+                </TouchableOpacity>
+
               <Text style={styles.sectionTitle}>Sessions</Text>
+              </View>
               {sessions.length != 0 ? (
                 sessions.map(({ id, date, workoutId, task }, index) => {
                   return (
@@ -84,6 +95,16 @@ const styles = StyleSheet.create({
   },
   exerciseSection: {
     marginBottom: 10,
+  },
+  backIcon: {
+    color: "#fff",
+    fontSize: 30,
+    paddingTop:4,
+    paddingRight: 10,
+  },
+  titleHeader: {
+    flexDirection: "row",
+    margin: 5,
   },
 });
 
