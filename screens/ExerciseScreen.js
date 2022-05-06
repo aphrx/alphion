@@ -59,7 +59,7 @@ const ExerciseScreen = ({ route, navigation }) => {
         </View>
         <ExerciseGraph
           prevSessions={prevSessionSets}
-          data={sessionsTenRM.reverse().slice(-9)}
+          data={sessionsTenRM}
         />
         {prevSessions.map((obj, index) => {
           return (

@@ -22,6 +22,7 @@ import BlueImage from "../assets/blue.png";
 import PurpleImage from "../assets/purple.png";
 import TileOptionButton from "../components/TileOptionButton.js";
 // import Toast from "react-native-simple-toast";
+import Toast from 'react-native-root-toast';
 import BottomSheet from "reanimated-bottom-sheet";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
@@ -35,7 +36,7 @@ const EditWorkoutScreen = ({ route, navigation }) => {
 
   const checkIfValid = () => {
     if (exerciseList.length == 0) {
-      // Toast.show("Workout does not have any exercises.");
+      Toast.show("Workout does not have any exercises.");
       return false;
     }
     for (let i = 0; i < exerciseList.length; i++) {
@@ -45,12 +46,12 @@ const EditWorkoutScreen = ({ route, navigation }) => {
         exerciseList[i].exerciseReps == "" ||
         exerciseList[i].exerciseReps == null
       ) {
-        // Toast.show("Some exercises do not have sets and/or reps.");
+        Toast.show("Some exercises do not have sets and/or reps.");
         return false;
       }
     }
     if (name.trim() == "") {
-      // Toast.show("Workout does not have a name.");
+      Toast.show("Workout does not have a name.");
       return false;
     }
     return true;

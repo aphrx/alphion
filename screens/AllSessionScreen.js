@@ -13,6 +13,7 @@ const AllSessionScreen = ({ navigation }) => {
   useEffect(() => {
     async function func() {
       let sid = await getAllSessions();
+      console.log(sid)
       setSessions(sid);
     }
     func();

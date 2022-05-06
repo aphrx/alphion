@@ -28,7 +28,7 @@ const RepTile = (props) => {
         <View style={styles.exerciseSetAdjustment}>
           <TextInput
             keyboardType={
-              Platform.OS === "android" ? "phone-pad" : "number-pad"
+              Platform.OS === "android" ? "phone-pad" : "decimal-pad"
             }
             style={styles.editableSetAdjustmentText}
             placeholderTextColor={"#fff"}
@@ -43,7 +43,7 @@ const RepTile = (props) => {
         <View style={styles.exerciseSetAdjustment}>
           <TextInput
             keyboardType={
-              Platform.OS === "android" ? "phone-pad" : "number-pad"
+              Platform.OS === "android" ? "phone-pad" : "decimal-pad"
             }
             style={styles.editableSetAdjustmentText}
             placeholderTextColor={"#fff"}

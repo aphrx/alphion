@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Settings } from "react-native";
 import Avatar from "../components/Avatar";
 import SettingTile from "../components/SettingTile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -16,7 +16,10 @@ const ProfileScreen = ({navigation}) => {
       </View>
 
       <SettingTile setting="Beta Features" storeKey="@beta_feature" />
-      {/* <Avatar /> */}
+      <SettingTile setting="Enable Metric" storeKey="@metric_weight" />
+      <View style={styles.avatarContainer}>
+        <Avatar />
+      </View>
     </View>
   );
 };
@@ -44,6 +47,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 5,
   },
+  avatarContainer: {
+    // backgroundColor: "#fff",
+    // padding: 5,
+  }
 });
 
 export default ProfileScreen;

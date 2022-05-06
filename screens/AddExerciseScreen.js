@@ -7,21 +7,24 @@ import {
   TextInput,
   Keyboard,
   KeyboardAvoidingView,
-  TouchableOpacity
+  TouchableOpacity,
+  Picker,
 } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import ExerciseTile from "../components/ExerciseTile";
 import { getExerciseOptions, insertExerciseOption } from "../services/Database";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Toast from 'react-native-root-toast';
 
 const AddExerciseScreen = ({ route, navigation }) => {
   const [exercises, setExercises] = useState([]);
   const [page, setPage] = useState(1);
   const sheetRef = useRef(null);
   const [customExercise, setCustomExercise] = useState(null);
-  const [customMuscle, setCustomMuscle] = useState(null);
+  const [customMuscle, setCustomMuscle] = useState('Select a muscle');
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(0);
+  const [selectedValue, setSelectedValue] = useState();
 
   useEffect(() => {
     load_exercises(1);
@@ -54,7 +57,7 @@ const AddExerciseScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
   const handleAddCustomExercise = async (exercise, muscle) => {
-    console.log("adding")
+    console.log("adding");
     let id = await insertExerciseOption(exercise, muscle, 1);
     route.params.onReturn({ id, exercise, muscle, sets: null, reps: null });
     navigation.goBack();
@@ -70,17 +73,37 @@ const AddExerciseScreen = ({ route, navigation }) => {
           placeholderTextColor={"#fff"}
           onChangeText={(text) => setCustomExercise(text)}
         ></TextInput>
-        <TextInput
-          style={styles.modalTextInput}
+        {/* <TextInput
+          style=
           placeholder="Muscle"
           placeholderTextColor={"#fff"}
-          onChangeText={(text) => setCustomMuscle(text)}
-        ></TextInput>
+
+        ></TextInput> */}
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={customMuscle}
+            style={styles.pickerStyle}
+            itemStyle={styles.pickerItems}
+            onValueChange={(itemValue, _) =>
+              setCustomMuscle(itemValue)
+            }
+          >
+            {['Select a muscle', 'Abs', 'Arms', 'Back', 'Calves', 'Chest', 'Legs', 'Shoulders'].map((value) => {
+              return <Picker.Item label={value} value={value} />;
+            })}
+          </Picker>
+        </View>
       </View>
       <TouchableOpacity
         style={styles.add}
-        onPress={async () =>
-          await handleAddCustomExercise(customExercise, customMuscle)
+        onPress={async () => {
+            if(customMuscle != 'Select a muscle' && customExercise != null && customExercise.trim() != ''){
+              await handleAddCustomExercise(customExercise.trim(), customMuscle)
+            }
+            else{
+              Toast.show("Make sure that exercise is named and an appropriate muscle group is selected.");
+            }
+          }
         }
       >
         <Text style={styles.doneText}>Done</Text>
@@ -221,7 +244,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    height:1000
+    height: 1000,
   },
   centerContainer: {
     alignItems: "center",
@@ -240,6 +263,22 @@ const styles = StyleSheet.create({
   titleHeader: {
     flexDirection: "row",
     margin: 5,
+  },
+  pickerItems: {
+    color: "#fff",
+  },
+  pickerContainer: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: "#1b1b1b",
+    color: "#fff",
+    borderRadius: 20,
+    width: "90%",
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  pickerStyle: {
+    color: "#fff",
   },
 });
 

@@ -52,7 +52,7 @@ const PrevSessionTile = (props) => {
       <View style={styles.repView}>
         <PrevRepHeader />
         {setsList.map(({ setIndex, weight, reps }, index) => {
-          return (
+          return(
             <PrevRepTile
               key={index}
               index={setIndex}
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 10,
     paddingLeft: 5,
-    textTransform: "capitalize",
   },
   repView: {
     marginTop: 10,

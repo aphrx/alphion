@@ -46,7 +46,7 @@ const ExerciseTileWithSets = (props) => {
         <View style={styles.exerciseSetAdjustment}>
           <TextInput
             keyboardType={
-              Platform.OS === "android" ? "phone-pad" : "number-pad"
+              Platform.OS === "android" ? "phone-pad" : "decimal-pad"
             }
             style={styles.editableSetAdjustmentText}
             placeholder="-"
@@ -60,7 +60,7 @@ const ExerciseTileWithSets = (props) => {
         <View style={styles.exerciseSetAdjustment}>
           <TextInput
             keyboardType={
-              Platform.OS === "android" ? "phone-pad" : "number-pad"
+              Platform.OS === "android" ? "phone-pad" : "decimal-pad"
             }
             style={styles.editableSetAdjustmentText}
             placeholder="-"

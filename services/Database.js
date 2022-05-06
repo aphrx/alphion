@@ -358,7 +358,7 @@ export const getIfLastSessionCompleted = (workoutId) =>
   new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT s.*, task FROM Sessions s LEFT JOIN Workouts w ON w.id = s.workoutId WHERE s.isComplete = 1",
+        "SELECT s.*, task FROM Sessions s LEFT JOIN Workouts w ON w.id = s.workoutId WHERE s.isComplete = 1 ORDER BY s.id DESC",
         [],
         function (tx, results) {
           resolve(results.rows._array);
@@ -396,3 +396,9 @@ export const createTable = async () => {
     }
   }
 };
+
+export const alterTable = async () => {
+  db.transaction((tx) => {
+  tx.executeSql("ALTER TABLE Sessions ADD COLUMN duration TEXT");
+  });
+}
