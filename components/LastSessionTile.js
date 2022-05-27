@@ -84,8 +84,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     paddingTop: 10,
-    paddingLeft: 5,
-    textTransform: "capitalize",
+    paddingLeft: 5
   },
   repView: {
     marginTop: 10,

@@ -71,7 +71,6 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   };
 
   const startWorkout = async () => {
-    console.log("Starting workout")
     let sid = await insertSession(workoutId);
 
     navigation.navigate("LiveWorkoutScreen", {
@@ -85,7 +84,6 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   };
 
   const continueWorkout = async () => {
-    console.log("Continuing workout")
     navigation.navigate("LiveWorkoutScreen", {
       workoutId: workoutId,
       workoutName: workoutName,

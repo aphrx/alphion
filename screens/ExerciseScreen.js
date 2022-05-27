@@ -21,6 +21,8 @@ const ExerciseScreen = ({ route, navigation }) => {
       let sessions = await getPrevSession(workoutId, exerciseId);
       setPrevSessions(sessions);
       setPrevSessionSets(sid);
+      console.log(sessions);
+      console.log(sid)
     }
     if (!unmounted) {
       func();

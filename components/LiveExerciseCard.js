@@ -13,7 +13,6 @@ import {
   getSetsForExercise,
   insertSet,
   updateSet,
-  getPrevSessionSets,
   deleteSet,
   getLastSetsForExercise,
 } from "../services/Database";
@@ -30,7 +29,6 @@ const LiveExerciseCard = (props) => {
     let sets = await getSetsForExercise(props.wid, props.sid, props.eid);
     for (let i = 0; i < sets.length; i++) {
       if(temp.length > i){
-        console.log(i, sets[i].setIndex)
         temp[sets[i].setIndex].lbs = sets[i].weight;
         temp[sets[i].setIndex].reps = sets[i].reps;
         temp[sets[i].setIndex].isComplete = 1;

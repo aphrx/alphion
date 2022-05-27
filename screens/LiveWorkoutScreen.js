@@ -11,7 +11,6 @@ import LiveExerciseCard from "../components/LiveExerciseCard.js";
 import {
   completeSession,
   db,
-  getPrevSession,
   getPrevSessionSets,
 } from "../services/Database.js";
 import { ScrollView } from "react-native-gesture-handler";

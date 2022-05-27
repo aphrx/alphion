@@ -102,8 +102,14 @@ export const getPrevSessionSets = (wid, eid, isAll) =>
     db.transaction((tx) => {
       if (isAll) {
         tx.executeSql(
-          "SELECT sess.id, DATETIME(sess.date, 'localtime') FROM Sessions sess LEFT JOIN Sets s ON sess.id = s.sessionId WHERE sess.workoutId = ? AND sess.isComplete = 1 AND s.exerciseId = ? ORDER BY sess.id DESC ",
-          [wid, eid],
+          " SELECT sess.id, DATETIME(sess.date, 'localtime') \
+            FROM Sessions sess \
+            LEFT JOIN Sets s \
+            ON sess.id = s.sessionId \
+            WHERE sess.isComplete = 1 \
+            AND s.exerciseId = ? \
+            ORDER BY sess.id DESC ",
+          [eid],
           function (tx, results) {
             resolve(results.rows._array);
           },
@@ -138,11 +144,10 @@ export const getPrevSessionSets = (wid, eid, isAll) =>
            FROM Sessions sess \
            INNER JOIN Sets s \
            ON sess.id = s.sessionId \
-           WHERE sess.workoutId = ? \
-           AND s.exerciseId = ?\
+           WHERE s.exerciseId = ? \
            AND sess.isComplete = 1 \
            ORDER BY sess.id DESC ",
-          [wid, eid],
+          [eid],
           function (tx, results) {
             resolve(results.rows._array);
           },
@@ -179,8 +184,8 @@ export const getSetsForExercise = (wid, sid, eid) =>
   new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM Sets WHERE workoutId = ? AND sessionId = ? AND exerciseId = ? ORDER BY setIndex ASC",
-        [wid, sid, eid],
+        "SELECT * FROM Sets WHERE  sessionId = ? AND exerciseId = ? ORDER BY setIndex ASC",
+        [sid, eid],
         function (tx, results) {
           resolve(results.rows._array);
         },
