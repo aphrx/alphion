@@ -4800,7 +4800,7 @@ expo-application@~4.0.2:
   resolved "https://registry.npmjs.org/expo-application/-/expo-application-4.0.2.tgz"
   integrity sha512-ngTaFplTkWn0X45gMC+VNXGyJfGxX4wOwKmtr17rNMVWOQUhhLlyMkTj9bAamzsuwZh35l3S/eD/N1aMWWUwMw==
 
-expo-asset-utils@~3.0.0:
+expo-asset-utils@^3.0.0, expo-asset-utils@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/expo-asset-utils/-/expo-asset-utils-3.0.0.tgz#2c7ddf71ba9efacf7b46c159c1c650114a2f14dc"
   integrity sha512-CgIbNvTqKqQi1lrlptmwoaCMu4ZVOZf8tghmytlor23CjIOuorw6cfuOqiqWkJLz23arTt91maYEU9XLMPB23A==
@@ -4915,7 +4915,7 @@ expo-font@~10.0.5:
   dependencies:
     fontfaceobserver "^2.1.0"
 
-expo-gl-cpp@^11.1.1, expo-gl-cpp@~11.1.0:
+expo-gl-cpp@~11.1.0:
   version "11.1.1"
   resolved "https://registry.yarnpkg.com/expo-gl-cpp/-/expo-gl-cpp-11.1.1.tgz#883781535658a3598f2262425b1d3527b0e72760"
   integrity sha512-BWcJ3cZAo0ZlKueKwb3uRYrRjZPF/CfgE96hBCnLhYBs2TOWt/iV8s5+H0fvZuHBKo13AK/9NdyVRaAb88DKqg==

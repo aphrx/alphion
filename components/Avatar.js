@@ -219,7 +219,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as FileSystem from 'expo-file-system';
 import { decode } from 'base64-arraybuffer';
 import { GLView } from 'expo-gl'
-import { Scene, Mesh, MeshStandardMaterial, PerspectiveCamera, PointLight, HemisphereLight, AmbientLight } from 'three'
+import { Scene, PerspectiveCamera, PointLight, HemisphereLight, AmbientLight } from 'three'
 
 
 const Avatar = () => {
@@ -251,19 +251,19 @@ const Avatar = () => {
     const ambientLight = new AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
   
-    const icebear = {
+    const avatar = {
       type: 'fbx',
-      name: 'icebear',
+      name: 'avatar',
       isometric: false,
       model: require('../assets/model.fbx'),
       textures: [
         // {
         //   name: 'axepCube3',
-        //   image: require('../models/icebear/textures/TXaxe.xjpg'),
+        //   image: require('../models/avatar/textures/TXaxe.xjpg'),
         // },
         // {
         //   name: 'polySurface10',
-        //   image: require('../models/icebear/textures/TXpolar.xjpg'),
+        //   image: require('../models/avatar/textures/TXpolar.xjpg'),
         // },
       ],
       scale: {
@@ -283,12 +283,12 @@ const Avatar = () => {
       },
     };
     
-    const model = await loadModel(icebear);
-    scene.add(model);
+    // const model = await loadModel(avatar);
+    // scene.add(model);
     
     function update() {
       // define your own update here
-      // eg. if (model) model.rotation.y += icebear.animation.rotation.y;
+      // eg. if (model) model.rotation.y += avatar.animation.rotation.y;
     }
     
     // Setup an animation loop

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Alphion",
     "slug": "alphion",
-    "version": "1.1.7",
+    "version": "1.1.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.1.7",
+      "bitcode": "Debug",
+      "buildNumber": "1.1.9",
       "bundleIdentifier": "com.aphrx.alphion",
       "appStoreUrl": "https://apps.apple.com/us/app/alphion/id1620286829"
     },
@@ -30,7 +31,7 @@
       },
       "permissions": [],
       "package": "com.aphrx.alphion",
-      "versionCode": 21,
+      "versionCode": 23,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.aphrx.alphion"
     },
     "web": {

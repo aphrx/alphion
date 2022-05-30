@@ -14,6 +14,7 @@ import SessionScreen from "./screens/SessionScreen";
 import AllSessionScreen from "./screens/AllSessionScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
+
 const Stack = createStackNavigator();
 
 const App = () => {
