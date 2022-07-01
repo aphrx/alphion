@@ -3,13 +3,12 @@ import { View, Switch, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SettingTile = (props) => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () => props.setIsEnabled((previousState) => !previousState);
 
   const storeKey = props.storeKey;
   const storeToggle = async () => {
     try {
-      await AsyncStorage.setItem(storeKey, JSON.stringify(!isEnabled));
+      await AsyncStorage.setItem(storeKey, JSON.stringify(!props.isEnabled));
     } catch (e) {}
     toggleSwitch();
   };
@@ -19,7 +18,7 @@ const SettingTile = (props) => {
       if (err) {
         console.log(err);
       } else {
-        setIsEnabled(JSON.parse(value)); // boolean false
+        props.setIsEnabled(JSON.parse(value)); // boolean false
       }
     });
   }, []);
@@ -32,7 +31,7 @@ const SettingTile = (props) => {
           style={styles.switch}
           ios_backgroundColor="#3e3e3e"
           onValueChange={storeToggle}
-          value={isEnabled}
+          value={props.isEnabled}
         />
       </View>
     </View>

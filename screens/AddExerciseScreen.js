@@ -7,9 +7,9 @@ import {
   TextInput,
   Keyboard,
   KeyboardAvoidingView,
-  TouchableOpacity,
-  Picker,
+  TouchableOpacity
 } from "react-native";
+import { Picker } from '@react-native-picker/picker';
 import BottomSheet from "reanimated-bottom-sheet";
 import ExerciseTile from "../components/ExerciseTile";
 import { getExerciseOptions, insertExerciseOption } from "../services/Database";

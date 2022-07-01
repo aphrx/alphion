@@ -3,6 +3,7 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import { View, StatusBar } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import 'react-native-gesture-handler';
 import WorkoutScreen from "./screens/WorkoutScreen";
 import AddWorkoutScreen from "./screens/AddWorkoutScreen";
 import EditWorkoutScreen from "./screens/EditWorkoutScreen";
@@ -18,6 +19,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 const Stack = createStackNavigator();
 
 const App = () => {
+  
   return (
     <RootSiblingParent>
       <View style={{ flex: 1, backgroundColor: "#000" }}>

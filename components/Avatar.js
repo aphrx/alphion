@@ -1,215 +1,4 @@
-// // // // const assetObj = Asset.fromModule(require('../assets/model.obj'));
-// // // // const assetMtl = Asset.fromModule(require('../assets/model.mtl'));
 
-// // import React from 'react';
-// // import ExpoTHREE, { THREE } from 'expo-three';
-// // import { GraphicsView } from 'expo-graphics';
-
-// // export default class Avatar extends React.Component {
-
-// //   componentDidMount() {
-// //     THREE.suppressExpoWarnings();
-// //   }
-
-// //   // When our context is built we can start coding 3D things.
-// //   onContextCreate = async ({ gl, pixelRatio, width, height }) => {
-// //     console.log("creating contextt")
-// //     // Create a 3D renderer
-// //     this.renderer = new ExpoTHREE.Renderer({
-// //       gl,
-// //       pixelRatio,
-// //       width,
-// //       height,
-// //     });
-
-// //     // We will add all of our meshes to this scene.
-// //     console.log('loading')
-// //     this.scene = new THREE.Scene();
-// //     this.scene.background = new THREE.Color(0xbebebe)
-// //     this.camera = new THREE.PerspectiveCamera(45, width/height, 1, 1000)
-// //     this.camera.position.set(3, 3, 3);
-// //     this.camera.lookAt(0, 0, 0);
-// //     this.scene.add(new THREE.AmbientLight(0xffffff));
-    
-// //     await this.loadModel();
-// //   };
-
-// //   loadModel = async () => {
-// //     console.log("loading model")
-// //     const obj = {
-// //         "model.obj": require('../assets/model.obj'),
-// //         "model.mtl": require('../assets/model.mtl'),
-// //       }
-  
-// //       const model = await ExpoTHREE.loadAsync(
-// //         [obj['model.obj'], obj['model.mtl']],
-// //         null,
-// //         obj
-// //       );
-
-// //     // this ensures the model will be small enough to be viewed properly
-// //     ExpoTHREE.utils.scaleLongestSideToSize(model, 1);
-// //     this.scene.add(model)
-// //   };
-
-// //   // When the phone rotates, or the view changes size, this method will be called.
-// //   onResize = ({ x, y, scale, width, height }) => {
-// //     // Let's stop the function if we haven't setup our scene yet
-// //     if (!this.renderer) {
-// //       return;
-// //     }
-// //     this.camera.aspect = width / height;
-// //     this.camera.updateProjectionMatrix();
-// //     this.renderer.setPixelRatio(scale);
-// //     this.renderer.setSize(width, height);
-// //   };
-
-// //   // Called every frame.
-// //   onRender = delta => {
-// //     // Finally render the scene with the Camera
-// //     this.renderer.render(this.scene, this.camera);
-// //   };
-
-// //   render() {
-// //     console.log("hi")
-// //     return (
-// //       <GraphicsView
-// //         onContextCreate={this.onContextCreate}
-// //         onRender={this.onRender}
-// //         onResize={this.onResize}
-// //       />
-// //     );
-// //   }
-// // }
-
-// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-// import { GLView } from 'expo-gl';
-// import { Asset } from 'expo-asset';
-// import { Renderer} from 'expo-three';
-// import * as React from 'react';
-// import {
-//   AmbientLight,
-//   Fog,
-//   PerspectiveCamera,
-//   PointLight,
-//   Scene,
-//   SpotLight,
-// } from 'three';
-
-// export default function Avatar() {
-//   console.log("glview?")
-
-//   let timeout;
-
-//   React.useEffect(() => {
-//     // Clear the animation loop when the component unmounts
-//     return () => clearTimeout(timeout);
-//   }, []);
-
-
-//   return (
-    
-//     <GLView
-//       style={{ flex: 1 }}
-//       onContextCreate={async (gl) => {
-//         console.log
-//         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-//         const sceneColor = 668096;
-
-//         // Create a WebGLRenderer without a DOM element
-//         const renderer = new Renderer({ gl });
-//         renderer.setSize(width, height);
-//         renderer.setClearColor(0x668096);
-
-//         const camera = new PerspectiveCamera(70, width / height, 0.01, 1000);
-//         camera.position.set(2, 5, 5);
-
-//         const scene = new Scene();
-//         scene.fog = new Fog(sceneColor, 1, 10000);
-
-//         const ambientLight = new AmbientLight(0x101010);
-//         scene.add(ambientLight);
-
-//         const pointLight = new PointLight(0xffffff, 2, 1000, 1);
-//         pointLight.position.set(0, 200, 200);
-//         scene.add(pointLight);
-
-//         const spotLight = new SpotLight(0xffffff, 0.5);
-//         spotLight.position.set(0, 500, 100);
-//         spotLight.lookAt(scene.position);
-//         scene.add(spotLight);
-    
-//         const asset = Asset.fromModule(require('../assets/model.obj'));
-//         await asset.downloadAsync();
-
-//         // instantiate a loader
-//         const loader = new OBJLoader();
-
-//         // load a resource
-//         loader.load(
-//             // resource URL
-//             asset.localUri,
-//             // called when resource is loaded
-//             function ( object ) {
-//                 object.scale.set(0.065, 0.065, 0.065)
-//                 scene.add( object );
-//                 camera.lookAt(object.position)
-//             //rotate my obj file
-//                 function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
-//                     object.rotateX(THREE.Math.degToRad(degreeX));
-//                     object.rotateY(THREE.Math.degToRad(degreeY));
-//                     object.rotateZ(THREE.Math.degToRad(degreeZ));
-//                  }
-                 
-//                  // usage:
-//                  console.log("glview2")
-//                  rotateObject(object, 0, 0, 70);
-
-//                 //animate rotation
-//                 function update() {
-//                     object.rotation.x += 0.015
-//                 }
-//                 const render = () => {
-//                     console.log("rendering")
-//                     timeout = requestAnimationFrame(render);
-//                     update();
-//                     renderer.render(scene, camera);
-//                     gl.endFrameEXP();
-//                   };
-//                 render();
-//             },
-           
-//             // called when loading is in progresses
-//             function ( xhr ) {
-
-//                 console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
-//             },
-//             // called when loading has errors
-//             function ( error ) {
-
-//                 console.log( error );
-
-//             }
-        
-//         );   
-//       }}
-//     />
-//   );  
-// }
-
-
-// // // const assetObj = Asset.fromModule(require('../assets/model.obj'));
-// // // const assetMtl = Asset.fromModule(require('../assets/model.mtl'));
-
-// import React from 'react'
-// import { View } from 'react-native'
-// import Expo from 'expo'
-// import ExpoTHREE, { , loadObjAsync } from 'expo-three'
-// 
-// import { BoxBufferGeometry } from '../node_modules/three/build/three'
-// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-// import { Asset } from 'expo-asset';
 import React from 'react'
 import { View } from 'react-native'
 import { loadObjAsync, loadTextureAsync, Renderer } from 'expo-three';
@@ -219,37 +8,41 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as FileSystem from 'expo-file-system';
 import { decode } from 'base64-arraybuffer';
 import { GLView } from 'expo-gl'
-import { Scene, PerspectiveCamera, PointLight, HemisphereLight, AmbientLight } from 'three'
-
+import { Scene, PerspectiveCamera, PointLight, HemisphereLight, AmbientLight, DirectionalLight } from 'three'
 
 const Avatar = () => {
+  var clock = new THREE.Clock();
 
   onContextCreate = async (gl, data) => {
     // const {setRenderer, setCamera, setScene} = data;
     // const { selected } = data;
     const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-    const sceneColor = 0xabd2c3;
+    // const sceneColor = 0xff7f7f;
     // Create a WebGLRenderer without a DOM element
     const renderer = new Renderer({ gl });
     renderer.setSize(width, height);
-    renderer.setClearColor(sceneColor);
+    // renderer.setClearColor(sceneColor);
   
-    const camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.set(50, 100, 200);
+    const camera = new PerspectiveCamera(75, width / height, 1, 10000);
+    camera.position.set(5, 35, 60);
     
     const scene = new Scene();
   
-    const pointLight = new PointLight(0xffffff, 2, 1000, 1);
-    pointLight.position.set(0, 30, 100);
+    // const pointLight = new PointLight(0xffffff, 2, 1000, 1);
+    // pointLight.position.set(0, 100, 200);
     // scene.add(pointLight);
   
-    // HemisphereLight - color feels nicer
-    const hemisphereLight = new HemisphereLight(0xffffbb, 0x080820, 1);
-    scene.add(hemisphereLight);
+    // // HemisphereLight - color feels nicer
+    // const hemisphereLight = new HemisphereLight(0x111111, 0x444444,  1);
+    // scene.add(hemisphereLight);
   
     // AmbientLight - add more brightness?
-    const ambientLight = new AmbientLight(0x404040); // soft white light
+    const ambientLight = new AmbientLight(0xffffff); // soft white light
     scene.add(ambientLight);
+
+    // const directionalLight = new DirectionalLight( 0xebf3ff)
+    // directionalLight.position.set(0, 50, 100)
+    // scene.add(directionalLight)
   
     const avatar = {
       type: 'fbx',
@@ -257,38 +50,48 @@ const Avatar = () => {
       isometric: false,
       model: require('../assets/model.fbx'),
       textures: [
+
+
         // {
-        //   name: 'axepCube3',
-        //   image: require('../models/avatar/textures/TXaxe.xjpg'),
+        //   name: 'glossiness',
+        //   image: require('../assets/textures/glossiness.png'),
         // },
         // {
-        //   name: 'polySurface10',
-        //   image: require('../models/avatar/textures/TXpolar.xjpg'),
+        //   name: 'specular',
+        //   image: require('../assets/textures/Ch36_1001_Specular.png'),
         // },
+
+        {
+          name: 'diffuse',
+          image: require('../assets/textures/Ch36_1001_Diffuse.png'),
+        },
+        // {
+        //   name: 'normal',
+        //   image: require('../assets/textures/Ch36_1001_Normal.png'),
+        // },
+
       ],
       scale: {
-        x: 1,
-        y: 1,
-        z: 1,
+        x: 0.4,
+        y: 0.4,
+        z: 0.4,
       },
       position: {
-        x: 0,
-        y: -1,
-        z: 0,
-      },
-      animation: {
-        rotation: {
-          y: 0.01, // to animate horizontally
-        },
-      },
+        x: -5,
+        y: 0,
+        z: -5,
+      }
     };
     
-    // const model = await loadModel(avatar);
-    // scene.add(model);
+    const model = await loadModel(avatar);
+    scene.add(model);
     
     function update() {
       // define your own update here
       // eg. if (model) model.rotation.y += avatar.animation.rotation.y;
+      // const delta = clock.getDelta();
+
+      // if ( model ) model.update( delta );
     }
     
     // Setup an animation loop
@@ -332,6 +135,12 @@ export async function loadFbxAsync({ asset, onAssetRequested }) {
   });
   const arrayBuffer = decode(base64);
   const loader = new FBXLoader();
+  // loader.load(uri, (loader) => {
+  //     let m = new THREE.AnimationMixer(fbx)
+  //     this._mixers.push(m)
+  //     let idle = m.clipAction(loader.animations[0])
+  //     idle.play()
+  // })
   return loader.parse(arrayBuffer, onAssetRequested);
 }
 export async function loadGLTFAsync({ asset, onAssetRequested }) {
@@ -359,7 +168,7 @@ export async function loadGLTFAsync({ asset, onAssetRequested }) {
   });
 }
 
-export const loadModel = async function(item) {
+export async function loadModel(item) {
   const texturesLength = item.textures?.length || 0;
   console.log(`[loadModel] -> Textures length: ${texturesLength}`);
   const textures = [];
@@ -383,9 +192,9 @@ export const loadModel = async function(item) {
     });
   } else if (item.type === 'fbx') {
     obj = await loadFbxAsync({ asset: item.model });
+    
   } else if (item.type === 'gltf' || item.type === 'glb') {
     const result = await loadGLTFAsync({ asset: item.model });
-    console.log(result);
     obj = result.scene;
   }
 
@@ -405,8 +214,8 @@ export const loadModel = async function(item) {
           //   `[loadModel] -> Traverse object name: ${object.name}`,
           // );
           // console.log(object);
-          // const selected = textures?.find(x => x.name === object.name);
-          // object.material.map = selected?.map;
+          const selected = textures?.find(x => x.name === object.name);
+          object.material.map = selected?.map;
         }
       });
     }

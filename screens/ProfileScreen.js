@@ -1,10 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Settings } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
+} from "react-native";
 import Avatar from "../components/Avatar";
 import SettingTile from "../components/SettingTile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isMetric, setIsMetric] = useState(false);
+  
   return (
     <View style={styles.container}>
       <View style={styles.titleHeader}>
@@ -15,10 +23,10 @@ const ProfileScreen = ({navigation}) => {
         <Text style={styles.sectionTitle}>Account</Text>
       </View>
 
-      <SettingTile setting="Beta Features" storeKey="@beta_feature" />
-      <SettingTile setting="Enable Metric" storeKey="@metric_weight" />
+      <SettingTile setting="Beta Features" storeKey="@beta_feature" isEnabled={isEnabled} setIsEnabled={setIsEnabled} />
+      <SettingTile setting="Enable Metric" storeKey="@metric_weight" isEnabled={isMetric} setIsEnabled={setIsMetric}/>
       <View style={styles.avatarContainer}>
-        <Avatar />
+        {!isEnabled ? <></> : <Avatar />}
       </View>
     </View>
   );
@@ -50,7 +58,7 @@ const styles = StyleSheet.create({
   avatarContainer: {
     // backgroundColor: "#fff",
     // padding: 5,
-  }
+  },
 });
 
 export default ProfileScreen;
