@@ -15,8 +15,6 @@ import { useIsFocused } from "@react-navigation/native";
 import moment from "moment";
 import ContributionGraphTile from "../components/ContributionGraphTile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-// import * as StoreReview from "expo-store-review";
 
 const WorkoutScreen = ({ navigation }) => {
   const [taskItems, setTaskItems] = useState([]);
@@ -41,35 +39,6 @@ const WorkoutScreen = ({ navigation }) => {
       func();
     }
   }, [isFocused]);
-
-  // const inAppReview = async () => {
-  //   console.log("hoi");
-  //   const install_date = AsyncStorage.getItem("@app_review_date");
-  //   if (!install_date ) {
-  //     try {
-  //       await AsyncStorage.setItem(
-  //         "@app_review_date",
-  //         moment().day(5).format("YYYY-MM-DD")
-  //       );
-  //     } catch (e) {}
-  //   }
-  //   if (moment().diff(moment(install_date, "YYYY-MM-DD")) < 0) {
-  //     if (StoreReview.isAvailableAsync()) {
-  //       await StoreReview.requestReview()
-  //         .then(function (response) {
-  //           console.log(StoreReview.storeUrl());
-  //           console.log("response is", response);
-  //         })
-  //         .catch((e) => {
-  //           console.log(e);
-  //         });
-  //     }
-  //     try {
-  //       await AsyncStorage.removeItem("@app_review_date");
-  //     } catch (e) {}
-  //   }
-
-  // };
 
   return (
     <SafeAreaProvider>
@@ -167,10 +136,6 @@ const styles = StyleSheet.create({
   },
   workoutTileWrapper: {
     width: "47%",
-  },
-  profileIcon: {
-    color: "#fff",
-    fontSize: 35,
   },
 });
 

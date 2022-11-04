@@ -13,8 +13,6 @@ import LiveWorkoutScreen from "./screens/LiveWorkoutScreen";
 import ExerciseScreen from "./screens/ExerciseScreen";
 import SessionScreen from "./screens/SessionScreen";
 import AllSessionScreen from "./screens/AllSessionScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-
 
 const Stack = createStackNavigator();
 
@@ -58,7 +56,6 @@ const App = () => {
               name="AllSessionScreen"
               component={AllSessionScreen}
             />
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
