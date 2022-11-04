@@ -3,36 +3,45 @@ import { View, Switch, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SettingTile = (props) => {
-  const toggleSwitch = () => props.setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = () =>
+    props.setIsEnabled((previousState) => !previousState);
 
   const storeKey = props.storeKey;
   const storeToggle = async () => {
-    try {
-      await AsyncStorage.setItem(storeKey, JSON.stringify(!props.isEnabled));
-    } catch (e) {}
-    toggleSwitch();
+    if (props.storeKey) {
+      try {
+        await AsyncStorage.setItem(storeKey, JSON.stringify(!props.isEnabled));
+      } catch (e) {}
+      toggleSwitch();
+    }
   };
 
   useEffect(() => {
-    AsyncStorage.getItem(storeKey, (err, value) => {
-      if (err) {
-        console.log(err);
-      } else {
-        props.setIsEnabled(JSON.parse(value)); // boolean false
-      }
-    });
+    if (props.storeKey) {
+      AsyncStorage.getItem(storeKey, (err, value) => {
+        if (err) {
+          console.log(err);
+        } else {
+          props.setIsEnabled(JSON.parse(value)); // boolean false
+        }
+      });
+    }
   }, []);
 
   return (
     <View style={styles.item}>
       <View style={styles.subText}>
         <Text style={styles.muscleText}>{props.setting}</Text>
-        <Switch
-          style={styles.switch}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={storeToggle}
-          value={props.isEnabled}
-        />
+        {props.setIsEnabled ? (
+          <Switch
+            style={styles.switch}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={storeToggle}
+            value={props.isEnabled}
+          />
+        ) : (
+          <></>
+        )}
       </View>
     </View>
   );
@@ -55,13 +64,13 @@ const styles = StyleSheet.create({
   subText: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:"center",
+    alignItems: "center",
     width: "100%",
     // height: "100%"
   },
-  switch:{
-    alignItems: "center"
-  }
+  switch: {
+    alignItems: "center",
+  },
 });
 
 export default SettingTile;

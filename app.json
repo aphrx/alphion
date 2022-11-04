@@ -2,7 +2,7 @@
   "expo": {
     "name": "Alphion",
     "slug": "alphion",
-    "version": "1.2.1",
+    "version": "1.2.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -10,6 +10,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#000"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you select a profile picture."
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -19,7 +27,7 @@
     "ios": {
       "supportsTablet": true,
       "bitcode": "Debug",
-      "buildNumber": "1.2.1",
+      "buildNumber": "1.2.3",
       "bundleIdentifier": "com.aphrx.alphion",
       "appStoreUrl": "https://apps.apple.com/us/app/alphion/id1620286829"
     },
@@ -31,7 +39,7 @@
       },
       "permissions": [],
       "package": "com.aphrx.alphion",
-      "versionCode": 25,
+      "versionCode": 27,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.aphrx.alphion"
     },
     "web": {

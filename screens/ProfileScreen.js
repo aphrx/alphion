@@ -8,23 +8,27 @@ import {
 import Avatar from "../components/Avatar";
 import SettingTile from "../components/SettingTile";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import AnimatedAvatar from "../components/AnimatedAvatar";
+import SubscriptionTile from "../components/SubscriptionTile";
+import ProfileTile from "../components/ProfileTile";
 
 const ProfileScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isMetric, setIsMetric] = useState(false);
   
-  return (
+  return ( 
     <View style={styles.container}>
       <View style={styles.titleHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <FontAwesome5 name={"angle-left"} style={styles.backIcon} solid />
         </TouchableOpacity>
 
-        <Text style={styles.sectionTitle}>Account</Text>
+        <Text style={styles.sectionTitle}>Settings</Text>
       </View>
-
+      <ProfileTile />
       <SettingTile setting="Beta Features" storeKey="@beta_feature" isEnabled={isEnabled} setIsEnabled={setIsEnabled} />
       <SettingTile setting="Enable Metric" storeKey="@metric_weight" isEnabled={isMetric} setIsEnabled={setIsMetric}/>
+      <SubscriptionTile />
       <View style={styles.avatarContainer}>
         {!isEnabled ? <></> : <Avatar />}
       </View>

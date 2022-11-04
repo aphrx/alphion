@@ -13,7 +13,13 @@ const PrevRepTile = (props) => {
         </View>
         <View style={styles.exerciseSetAdjustment}>
           <Text style={styles.editableSetAdjustmentText}>
-            {(props.lbs * props.reps) / 10}
+            {/* {(props.lbs * props.reps) / 10}
+{/*
+RepMaxCalc.brzonerm = RepMaxCalc.weight * (36 / (37 - RepMaxCalc.reps));
+Math.floor((RepMaxCalc.brzonerm * (37 - i)) / 36);
+
+*/}
+            {Math.floor(((props.lbs * (36 / (37 - props.reps))) * (27))/36)}
           </Text>
         </View>
       </View>
